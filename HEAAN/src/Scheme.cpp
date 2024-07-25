@@ -863,12 +863,13 @@ void Scheme::reScaleBy(Ciphertext& res, Ciphertext& cipher, long dlogq) {
 	res.logq -= dlogq;
 }
 
-void Scheme::reScaleTo(Ciphertext& res, Ciphertext& cipher, long logq) {
-	long dlogq = cipher.logq - logq;
+void Scheme::reScaleTo(Ciphertext& res, Ciphertext& cipher, long logp) {
+	long dlogp = cipher.logp - logp;
 	res.copyParams(cipher);
-	ring.rightShift(res.ax, cipher.ax, dlogq);
-	ring.rightShift(res.bx, cipher.bx, dlogq);
-	res.logp -= dlogq;
+	ring.rightShift(res.ax, cipher.ax, dlogp);
+	ring.rightShift(res.bx, cipher.bx, dlogp);
+	res.logq -= dlogp;
+	res.logp = logp;
 }
 
 void Scheme::reScaleByAndEqual(Ciphertext& cipher, long dlogq) {
@@ -878,12 +879,12 @@ void Scheme::reScaleByAndEqual(Ciphertext& cipher, long dlogq) {
 	cipher.logp -= dlogq;
 }
 
-void Scheme::reScaleToAndEqual(Ciphertext& cipher, long logq) {
-	long dlogq = cipher.logq - logq;
-	ring.rightShiftAndEqual(cipher.ax, dlogq);
-	ring.rightShiftAndEqual(cipher.bx, dlogq);
-	cipher.logq = logq;
-	cipher.logp -= dlogq;
+void Scheme::reScaleToAndEqual(Ciphertext& cipher, long logp) {
+	long dlogp = cipher.logp - logp;
+	ring.rightShiftAndEqual(cipher.ax, dlogp);
+	ring.rightShiftAndEqual(cipher.bx, dlogp);
+	cipher.logq -= dlogp;
+	cipher.logp = logp;
 }
 
 void Scheme::modDownBy(Ciphertext& res, Ciphertext& cipher, long dlogq) {

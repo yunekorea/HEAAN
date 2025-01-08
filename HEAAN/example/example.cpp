@@ -2,6 +2,7 @@
 
 using namespace std;
 using namespace NTL;
+using namespace heaan;
 
 int main() {
   /*
@@ -19,7 +20,7 @@ int main() {
 	
   // Construct and Generate Public Keys //
   srand(time(NULL));
-  SetNumThreads(numThread);
+  //SetNumThreads(numThread);
   TimeUtils timeutils;
   Ring ring;
   SecretKey secretKey(ring);

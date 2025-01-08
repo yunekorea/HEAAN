@@ -1,4 +1,4 @@
-#include "HEAAN.h"
+#include "../src/HEAAN.h"
 
 using namespace std;
 using namespace NTL;

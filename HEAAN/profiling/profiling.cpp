@@ -1,4 +1,4 @@
-#include "../src/HEAAN.h"
+#include "Profiling.h"
 
 using namespace std;
 using namespace NTL;

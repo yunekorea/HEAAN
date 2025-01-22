@@ -5,7 +5,7 @@
 #include <fstream>
 
 int loadCiphertext(string FileName, Ciphertext &ciphertext);
-std::vector<std::complex<double>>* loadInt(string FileName, Ciphertext &ciphertext);
-std::vector<std::complex<double>>* loadDouble(string FileName, Ciphertext &ciphertext);
+std::vector<std::complex<double>>* loadInt(string FileName);
+std::vector<std::complex<double>>* loadDouble(string FileName);
 
 #endif

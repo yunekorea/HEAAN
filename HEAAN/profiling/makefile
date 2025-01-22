@@ -4,7 +4,7 @@
 all: clean ProfilingHEAAN
 
 # Tool invocations
-ExampleHEAAN:
+ProfilingHEAAN:
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
 	g++ Profiling.cpp -o ProfilingHEAAN -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -std=c++11 -O2 -I/../src -pthread

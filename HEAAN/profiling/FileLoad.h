@@ -2,8 +2,10 @@
 #define PROF_FILELOAD_H_
 
 #include "../src/HEAAN.h"
+#include <fstream>
 
-int loadIntFromFile(string FileName, Ciphertext &ciphertext);
-int loadDoubleFromFile(string FileName, Ciphertext &ciphertext);
+int loadCiphertext(string FileName, Ciphertext &ciphertext);
+std::vector<std::complex<double>>* loadInt(string FileName, Ciphertext &ciphertext);
+std::vector<std::complex<double>>* loadDouble(string FileName, Ciphertext &ciphertext);
 
 #endif

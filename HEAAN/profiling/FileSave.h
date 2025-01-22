@@ -2,7 +2,8 @@
 #define PROF_FILESAVE_H_
 
 #include "../src/HEAAN.h"
+#include <fstream>
 
-int saveCipherFromFile(Ciphertext &ciphertext, string FileName);
+int saveCiphertext(Ciphertext &ciphertext, string FileName);
 
 #endif

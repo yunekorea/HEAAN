@@ -29,8 +29,11 @@ int main() {
   scheme.addRightRotKeys(secretKey); ///< When you need right rotation for the vectorized message
   
   // Make Random Array of Complex //
-  complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
-  complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(slots);
+  //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
+  //complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(slots);
+
+  vector<complex<double>>* mvec0 = loadDouble("randint_1gb_0.txt");
+  vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
   
   // Encrypt Two Arry of Complex //
   Ciphertext cipher1;
@@ -38,6 +41,7 @@ int main() {
   Ciphertext cipher2;
   scheme.encrypt(cipher2, mvec2, n, logp, logq);
   
+  /*
   // Addition //
   Ciphertext cipherAdd;
   scheme.add(cipherAdd, cipher1, cipher2);
@@ -56,7 +60,9 @@ int main() {
   // Decrypt //
   complex<double>* dvec1 = scheme.decrypt(secretKey, cipher1);
   complex<double>* dvec2 = scheme.decrypt(secretKey, cipher2);
-  
+  */
+
+
   return 0;
 
 }

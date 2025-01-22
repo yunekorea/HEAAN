@@ -44,7 +44,7 @@ complex<double>* loadInt(string FileName) {
 }
 
 std::vector<std::complex<double>>* loadDouble(string FileName) {
-    std::ifstream inFile(filename);
+    std::ifstream inFile(FileName);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading doubles.");
     }
@@ -53,7 +53,8 @@ std::vector<std::complex<double>>* loadDouble(string FileName) {
     complex<double> number;
     while (inputFile >> number) {
         // Create a complex number with the integer as the real part and 0 as the imaginary part
-        std::complex<double> complexNumber(number, 0);
+        //std::complex<double> complexNumber(number, 0);
+        complex<double> complexNumber = number;
 
         // Add the complex number to the array
         loadedVector.push_back(complexNumber);

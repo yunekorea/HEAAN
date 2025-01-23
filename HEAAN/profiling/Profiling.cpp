@@ -36,10 +36,13 @@ int main() {
   vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
   
   // Encrypt Two Arry of Complex //
+  Ciphertext cipher0;
+  scheme.encrypt(cipher0, mvec0, n, logp, logq);
   Ciphertext cipher1;
   scheme.encrypt(cipher1, mvec1, n, logp, logq);
-  Ciphertext cipher2;
-  scheme.encrypt(cipher2, mvec2, n, logp, logq);
+
+  saveCiphertext(cipher0, "randint_cipher_0.cip");
+  saveCiphertext(cipher1, "randint_cipher_1.cip");
   
   /*
   // Addition //

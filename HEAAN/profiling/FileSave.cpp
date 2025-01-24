@@ -3,9 +3,9 @@
 using namespace std;
 using namespace NTL;
 
-namespace heaan {
-
+namespace heaan{
 int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
+    /*
     std::ofstream outFile("integer1.cip", std::ios::binary);
     if (!outFile) {
         throw std::runtime_error("Failed to open file for saving ciphertext.");
@@ -22,8 +22,9 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     }
 
     outFile.close();
-
+    */
     return 0;
 }
 
 }
+

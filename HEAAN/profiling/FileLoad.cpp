@@ -6,7 +6,7 @@ using namespace NTL;
 namespace heaan {
 
 int loadCiphertext(string FileName, Ciphertext &ciphertext) {
-    
+    /* 
     std::ifstream inFile(filename, std::ios::binary);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading ciphertext.");
@@ -30,7 +30,7 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     }
 
     inFile.close();
-    
+    */
     return 0;
 }
 

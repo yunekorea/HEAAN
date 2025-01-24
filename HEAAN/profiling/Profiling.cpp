@@ -32,8 +32,11 @@ int main() {
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(slots);
 
-  vector<complex<double>>* mvec0 = loadDouble("randint_1gb_0.txt");
-  vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
+  //vector<complex<double>>* mvec0 = loadDouble("randint_1gb_0.txt");
+  //vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
+  
+  complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
+  complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
   
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;

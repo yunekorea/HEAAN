@@ -4,6 +4,6 @@
 #include "../src/HEAAN.h"
 #include <fstream>
 
-int saveCiphertext(Ciphertext &ciphertext, string FileName);
+int saveCiphertext(heaan::Ciphertext &ciphertext, std::string FileName);
 
 #endif

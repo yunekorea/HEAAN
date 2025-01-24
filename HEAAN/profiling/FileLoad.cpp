@@ -34,8 +34,8 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     return 0;
 }
 
-complex<double>* loadInt(string FileName) {
-    std::ifstream inFile(filename);
+complex<double>* loadInt(std::string FileName) {
+    std::ifstream inFile(FileName);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading integers.");
     }
@@ -44,7 +44,7 @@ complex<double>* loadInt(string FileName) {
 }
 
 //std::vector<std::complex<double>>* loadDouble(string FileName) {
-std::complex<double>* loadDouble(string FileName) {
+std::complex<double>* loadDouble(const std::string FileName) {
     std::ifstream inFile(FileName);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading doubles.");
@@ -52,7 +52,7 @@ std::complex<double>* loadDouble(string FileName) {
     //complex<double>* loaded = new complex<double>[n];
     std::vector<std::complex<double>> loadedVector;
     complex<double> number;
-    while (inputFile >> number) {
+    while (inFile >> number) {
         // Create a complex number with the integer as the real part and 0 as the imaginary part
         //std::complex<double> complexNumber(number, 0);
         complex<double> complexNumber = number;

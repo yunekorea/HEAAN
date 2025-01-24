@@ -4,8 +4,8 @@
 #include "../src/HEAAN.h"
 #include <fstream>
 
-int loadCiphertext(string FileName, Ciphertext &ciphertext);
-std::vector<std::complex<double>>* loadInt(string FileName);
-std::vector<std::complex<double>>* loadDouble(string FileName);
+int loadCiphertext(std::string FileName, heaan::Ciphertext &ciphertext);
+std::vector<std::complex<double>>* loadInt(std::string FileName);
+std::vector<std::complex<double>>* loadDouble(std::string FileName);
 
 #endif

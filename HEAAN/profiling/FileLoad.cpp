@@ -46,7 +46,7 @@ complex<double>* loadInt(std::string FileName) {
 
 //std::vector<std::complex<double>>* loadDouble(string FileName) {
 //std::complex<double>* loadDouble(const std::string FileName) {
-int loadDouble(string FileName) {
+int loadDouble(int FileName) {
     /*
     std::ifstream inFile(FileName);
     if (!inFile) {

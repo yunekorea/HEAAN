@@ -1,24 +1,31 @@
 # This sample should be run after make libHEAAN.a file in lib folder
 
-# All Target
-all: clean ProfilingHEAAN
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++11 -g -Wall -O2 -I../src -pthread
+LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread
 
-# Tool invocations
-ProfilingHEAAN: Profiling.h FileSave.o FileLoad.o
+# Source and object files
+SRCS = Profiling.cpp FileSave.cpp FileLoad.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# Target executable name
+TARGET = ProfilingHEAAN
+
+# Default rule
+all: clean $(TARGET)
+
+# Linking step
+$(TARGET): $(OBJS)
 	@echo 'Building target: $@'
-	@echo 'Invoking: GCC C++ Linker'
-#	g++ Profiling.cpp -o ProfilingHEAAN FileSave.o FileLoad.o -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -std=c++11 -O2 -I/../src -pthread
-	g++ Profiling.cpp FileLoad.o FileSave.o -o ProfilingHEAAN -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -std=c++11 -O2 -I../src -pthread
-
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 	@echo 'Finished building target: $@'
-	@echo ' '
 
-FileSave.o : FileSave.h
-	g++ -c -g FileSave.cpp
+# Compile individual source files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-FileLoad.o : FileLoad.h
-	g++ -c -g FileLoad.cpp
-
-# Other Targets
+# Clean up generated files
 clean:
-	rm -rf ProfilingHEAAN *.o
+	rm -rf $(OBJS) $(TARGET)
+

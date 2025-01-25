@@ -34,15 +34,13 @@ int main() {
 
   //vector<complex<double>>* mvec0 = loadDouble("randint_1gb_0.txt");
   //vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
-  std::string filename_0 = "randint_1gb_0.txt"; 
-  std::string filename_1 = "randint_1gb_1.txt";
   //complex<double>* mvec0 = loadDouble(filename_0);
   //complex<double>* mvec1 = loadDouble(filename_1);
   
   //complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
   //complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
-  int a = loadDouble("randint_1gb_0.txt");
-  int b = loadDouble("randint_1gb_1.txt");
+  int a = loadDouble(1);
+  int b = loadDouble(2);
 
   /*
   // Encrypt Two Arry of Complex //

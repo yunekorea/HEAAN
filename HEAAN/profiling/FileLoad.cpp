@@ -43,8 +43,11 @@ complex<double>* loadInt(std::string FileName) {
     return 0;
 }
 
+
 //std::vector<std::complex<double>>* loadDouble(string FileName) {
-std::complex<double>* loadDouble(const std::string FileName) {
+//std::complex<double>* loadDouble(const std::string FileName) {
+int loadDouble(string FileName) {
+    /*
     std::ifstream inFile(FileName);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading doubles.");
@@ -62,7 +65,8 @@ std::complex<double>* loadDouble(const std::string FileName) {
     }
 
     return &loadedVector[0];
-    //return 0;
+    */
+    return 0;
 }
 
 }

@@ -38,14 +38,19 @@ int main() {
   std::string filename_1 = "randint_1gb_1.txt";
   //complex<double>* mvec0 = loadDouble(filename_0);
   //complex<double>* mvec1 = loadDouble(filename_1);
-  complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
-  complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
   
+  //complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
+  //complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
+  int a = loadDouble("randint_1gb_0.txt");
+  int b = loadDouble("randint_1gb_1.txt");
+
+  /*
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
   Ciphertext cipher1;
   scheme.encrypt(cipher1, mvec1, n, logp, logq);
+  */
 
   //saveCiphertext(cipher0, "randint_cipher_0.cip");
   //saveCiphertext(cipher1, "randint_cipher_1.cip");

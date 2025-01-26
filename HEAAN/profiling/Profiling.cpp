@@ -145,10 +145,10 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     outFile.write(reinterpret_cast<const char*>(&ciphertext.logq), sizeof(long));
     outFile.write(reinterpret_cast<const char*>(&ciphertext.n), sizeof(long));
 
-     for (const auto& coeff : ciphertext.ax) {
+     for (const auto& coeff : &ciphertext.ax) {
         outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
     }
-    for (const auto& coeff : ciphertext.bx) {
+    for (const auto& coeff : &ciphertext.bx) {
         outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
     }
 

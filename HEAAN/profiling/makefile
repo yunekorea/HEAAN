@@ -6,7 +6,8 @@ CXXFLAGS = -std=c++11 -g -Wall -O2 -I../src -pthread
 LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread
 
 # Source and object files
-SRCS = Profiling.cpp FileSave.cpp FileLoad.cpp
+SRCS = Profiling.cpp FileSave.cpp 
+#FileLoad.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Target executable name

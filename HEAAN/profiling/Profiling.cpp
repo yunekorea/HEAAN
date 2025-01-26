@@ -4,7 +4,30 @@ using namespace std;
 using namespace NTL;
 using namespace heaan;
 
-int main() {
+int loadDouble(int FileName) {
+    /*
+    std::ifstream inFile(FileName);
+    if (!inFile) {
+        throw std::runtime_error("Failed to open file for loading doubles.");
+    }
+    //complex<double>* loaded = new complex<double>[n];
+    std::vector<std::complex<double>> loadedVector;
+    complex<double> number;
+    while (inFile >> number) {
+        // Create a complex number with the integer as the real part and 0 as the imaginary part
+        //std::complex<double> complexNumber(number, 0);
+        complex<double> complexNumber = number;
+
+        // Add the complex number to the array
+        loadedVector.push_back(complexNumber);
+    }
+
+    return &loadedVector[0];
+    */
+    return 0;
+}
+
+int main(int argc, char **argv) {
   /*
   * Basic Parameters are in src/Params.h
   * If you want to use another parameter, you need to change src/Params.h file and re-complie this library.

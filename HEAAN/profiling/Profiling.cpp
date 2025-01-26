@@ -46,16 +46,16 @@ int main(int argc, char **argv) {
   complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
   complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
 
-  /*
+  
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
   Ciphertext cipher1;
   scheme.encrypt(cipher1, mvec1, n, logp, logq);
-  */
+  
 
-  //saveCiphertext(cipher0, "randint_cipher_0.cip");
-  //saveCiphertext(cipher1, "randint_cipher_1.cip");
+  saveCiphertext(cipher0, "randint_cipher_0.cip");
+  saveCiphertext(cipher1, "randint_cipher_1.cip");
   
   /*
   // Addition //
@@ -136,7 +136,7 @@ std::complex<double>* loadDouble(const std::string FileName) {
 }
 
 int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
-    /*
+    
     std::ofstream outFile("integer1.cip", std::ios::binary);
     if (!outFile) {
         throw std::runtime_error("Failed to open file for saving ciphertext.");
@@ -153,6 +153,6 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     }
 
     outFile.close();
-    */
+    
     return 0;
 }

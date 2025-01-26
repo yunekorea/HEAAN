@@ -43,10 +43,8 @@ int main(int argc, char **argv) {
   //complex<double>* mvec0 = loadDouble(filename_0);
   //complex<double>* mvec1 = loadDouble(filename_1);
   
-  //complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
-  //complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
-  int a = loadDouble(1);
-  int b = loadDouble(2);
+  complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
+  complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
 
   /*
   // Encrypt Two Arry of Complex //
@@ -114,8 +112,8 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     return 0;
 }
 
-std::complex<double>* loadDouble(const std::string FileName {
-    /*
+std::complex<double>* loadDouble(const std::string FileName) {
+    
     std::ifstream inFile(FileName);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading doubles.");
@@ -133,7 +131,7 @@ std::complex<double>* loadDouble(const std::string FileName {
     }
 
     return &loadedVector[0];
-    */
+    
     return 0;
 }
 

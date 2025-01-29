@@ -70,6 +70,7 @@ int main(int argc, char **argv) {
   // Addition //
   Ciphertext cipherAdd;
   scheme.add(cipherAdd, cipher0, cipher1);
+  
   /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;

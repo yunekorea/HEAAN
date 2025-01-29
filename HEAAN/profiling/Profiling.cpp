@@ -42,20 +42,29 @@ int main(int argc, char **argv) {
   //vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
   //complex<double>* mvec0 = loadDouble(filename_0);
   //complex<double>* mvec1 = loadDouble(filename_1);
-  
-  complex<double>* mvec0 = loadDouble("randint_1gb_0.txt");
-  complex<double>* mvec1 = loadDouble("randint_1gb_1.txt");
-
-  
+  cout << "loading double" << endl; 
+  complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
+  complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
+  cout << "DONE" << endl;
+  /* 
+  for(int a = 0; a < n; a++) {
+    cout << mvec0[a].real() << " + " << mvec0[a].imag() << "i" << endl;
+  }
+  for(int a = 0; a < n; a++) {
+    cout << mvec1[a].real() << " + " << mvec1[a].imag() << "i" << endl;
+  }
+  */
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
   Ciphertext cipher1;
   scheme.encrypt(cipher1, mvec1, n, logp, logq);
   
-
-  saveCiphertext(cipher0, "randint_cipher_0.cip");
-  saveCiphertext(cipher1, "randint_cipher_1.cip");
+  cout << "saving randint" << endl;
+  saveCiphertext(cipher0, "randint_cipher_1024_0.cip");
+  cout << "0 DONE" << endl;
+  saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
+  cout << "1 DONE" << endl;
   
   /*
   // Addition //
@@ -137,7 +146,7 @@ std::complex<double>* loadDouble(const std::string FileName) {
 
 int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     
-    std::ofstream outFile("integer1.cip", std::ios::binary);
+    std::ofstream outFile(FileName, std::ios::binary);
     if (!outFile) {
         throw std::runtime_error("Failed to open file for saving ciphertext.");
     }
@@ -145,11 +154,15 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     outFile.write(reinterpret_cast<const char*>(&ciphertext.logq), sizeof(long));
     outFile.write(reinterpret_cast<const char*>(&ciphertext.n), sizeof(long));
 
-     for (const auto& coeff : &ciphertext.ax) {
-        outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
+    //for (const auto& coeff : &ciphertext.ax) {
+    for (int i = 0; i < ciphertext.n; i++) {
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
     }
-    for (const auto& coeff : &ciphertext.bx) {
+    /*for (const auto& coeff : &ciphertext.bx) {
         outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
+    }*/
+    for (int i = 0; i < ciphertext.n; i++) {
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.bx[i])), sizeof(uint64_t));
     }
 
     outFile.close();

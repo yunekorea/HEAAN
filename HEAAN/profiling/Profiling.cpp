@@ -68,9 +68,11 @@ int main(int argc, char **argv) {
   
   
   // Addition //
+  cout << "Cipher add" << endl;
   Ciphertext cipherAdd;
   scheme.add(cipherAdd, cipher0, cipher1);
-  
+  cout << "DONE" << endl;
+
   /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;

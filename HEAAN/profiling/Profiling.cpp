@@ -66,11 +66,11 @@ int main(int argc, char **argv) {
   saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
   
-  /*
+  
   // Addition //
   Ciphertext cipherAdd;
-  scheme.add(cipherAdd, cipher1, cipher2);
-  
+  scheme.add(cipherAdd, cipher0, cipher1);
+  /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;
   scheme.mult(cipherMult, cipher1, cipher2);
@@ -86,7 +86,6 @@ int main(int argc, char **argv) {
   complex<double>* dvec1 = scheme.decrypt(secretKey, cipher1);
   complex<double>* dvec2 = scheme.decrypt(secretKey, cipher2);
   */
-
 
   return 0;
 

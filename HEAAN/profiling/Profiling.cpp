@@ -93,8 +93,7 @@ int main(int argc, char **argv) {
 }
 
 int loadCiphertext(string FileName, Ciphertext &ciphertext) {
-    /* 
-    std::ifstream inFile(filename, std::ios::binary);
+    std::ifstream inFile(FileName, std::ios::binary);
     if (!inFile) {
         throw std::runtime_error("Failed to open file for loading ciphertext.");
     }
@@ -104,20 +103,23 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     inFile.read(reinterpret_cast<char*>(&ciphertext.logq), sizeof(long)); 
     inFile.read(reinterpret_cast<char*>(&ciphertext.n), sizeof(long));
 
-    // Resize the underlying vectors
-    ciphertext.ax.resize(ciphertext.n);
-    ciphertext.bx.resize(ciphertext.n);
+    // Resize the underlying vectors - Impossible with current array implementation.
+    //ciphertext.ax.resize(ciphertext.n);
+    //ciphertext.bx.resize(ciphertext.n);
 
     // Read ciphertext values
-    for (auto& coeff : ciphertext.ax) {
-        inFile.read(reinterpret_cast<char*>(&coeff), sizeof(uint64_t));
+
+    //for (auto& coeff : ciphertext.ax) {
+    for (int i = 0; i < ciphertext.n; i++) {
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
     }
-    for (auto& coeff : ciphertext.bx) {
-        inFile.read(reinterpret_cast<char*>(&coeff), sizeof(uint64_t));
+    //for (auto& coeff : ciphertext.bx) {
+    for (int i = 0; i < ciphertext.n; i++) {
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
     }
 
     inFile.close();
-    */
+    
     return 0;
 }
 

@@ -43,13 +43,15 @@ int main(int argc, char **argv) {
   complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
    
+  /*
   for(int a = 0; a < n; a++) {
     cout << mvec0[a].real() << " + " << mvec0[a].imag() << "i" << endl;
   }
   for(int a = 0; a < n; a++) {
     cout << mvec1[a].real() << " + " << mvec1[a].imag() << "i" << endl;
   }
-  
+  */
+  /*
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
@@ -61,29 +63,47 @@ int main(int argc, char **argv) {
   cout << "0 DONE" << endl;
   saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
-  
+  cout << sizeof(std::complex<double>) << endl;
+  */
+
   // Load ciphertexts //
-  Ciphertext cipher2, cipher3;
-  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
-  loadCiphertext("randint_cipher_1024_0.cip", cipher3);
   
+  Ciphertext cipher2;
+  Ciphertext cipher3;
+  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
+  loadCiphertext("randint_cipher_1024_1.cip", cipher3);
+
+  /*
+  for(int z = 0; z < cipher2.n; z++) {
+    if(cipher0.ax[z] != cipher2.ax[z])
+      cout << "Cipher difference" << endl;
+    if(cipher0.bx[z] != cipher2.bx[z])
+      cout << "Cipher difference" << endl;
+    if(cipher1.ax[z] != cipher3.ax[z])
+      cout << "Cipher difference" << endl;
+    if(cipher1.bx[z] != cipher3.bx[z])
+      cout << "Cipher difference" << endl;
+  }
+  */
+  
+  /*
   // Addition //
   cout << "Cipher add" << endl;
   Ciphertext cipherAdd;
   scheme.add(cipherAdd, cipher0, cipher1);
   cout << "0, 1 DONE" << endl;
-
+  */
   Ciphertext cipherAdd2;
   scheme.add(cipherAdd2, cipher2, cipher3);
   cout << "2, 3 DONE" << endl;
-
   
+  /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;
-  scheme.mult(cipherMult, cipher1, cipher2);
+  scheme.mult(cipherMult, cipher0, cipher1);
   Ciphertext cipherMultAfterReScale;
   scheme.reScaleBy(cipherMultAfterReScale, cipherMult, logp);
-  /*
+  
   // Rotation //
   long idx = 1;
   Ciphertext cipherRot;
@@ -108,7 +128,10 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     inFile.read(reinterpret_cast<char*>(&ciphertext.logp), sizeof(long));
     inFile.read(reinterpret_cast<char*>(&ciphertext.logq), sizeof(long)); 
     inFile.read(reinterpret_cast<char*>(&ciphertext.n), sizeof(long));
-
+    
+    cout << "LCT : logp - " << ciphertext.logp << endl;
+    cout << "LCT : logq - " << ciphertext.logq << endl;
+    cout << "LCT : n - " << ciphertext.n << endl;
     // Resize the underlying vectors - Impossible with current array implementation.
     //ciphertext.ax.resize(ciphertext.n);
     //ciphertext.bx.resize(ciphertext.n);
@@ -117,11 +140,13 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
 
     //for (auto& coeff : ciphertext.ax) {
     for (int i = 0; i < ciphertext.n; i++) {
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
+        //inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
     }
     //for (auto& coeff : ciphertext.bx) {
     for (int i = 0; i < ciphertext.n; i++) {
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
+        //inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
     }
 
     inFile.close();
@@ -169,14 +194,14 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     outFile.write(reinterpret_cast<const char*>(&ciphertext.n), sizeof(long));
 
     //for (const auto& coeff : &ciphertext.ax) {
-    for (int i = 0; i < ciphertext.n; i++) {
-        outFile.write(reinterpret_cast<const char*>(&(ciphertext.ax[i])), sizeof(uint64_t));
+    for (int i = 0; i <ciphertext.n; i++) {
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
     }
     /*for (const auto& coeff : &ciphertext.bx) {
         outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
     }*/
     for (int i = 0; i < ciphertext.n; i++) {
-        outFile.write(reinterpret_cast<const char*>(&(ciphertext.bx[i])), sizeof(uint64_t));
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
     }
 
     outFile.close();

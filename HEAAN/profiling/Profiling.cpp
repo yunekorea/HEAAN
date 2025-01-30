@@ -35,12 +35,12 @@ int main(int argc, char **argv) {
   scheme.addRightRotKeys(secretKey); ///< When you need right rotation for the vectorized message
   
   // Make Random Array of Complex //
-  //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
-  //complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(slots);
+  complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
+  complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
   cout << "loading double" << endl; 
-  complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
-  complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
+  //complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
+  //complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
    
   /*
@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
     cout << mvec1[a].real() << " + " << mvec1[a].imag() << "i" << endl;
   }
   */
+  
   /*
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
@@ -63,8 +64,11 @@ int main(int argc, char **argv) {
   cout << "0 DONE" << endl;
   saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
-  cout << sizeof(std::complex<double>) << endl;
   */
+  cout << sizeof(std::complex<double>) << endl;
+  cout << sizeof(double) << endl;
+  cout << sizeof(NTL::ZZ) << endl;
+  
 
   // Load ciphertexts //
   
@@ -84,7 +88,8 @@ int main(int argc, char **argv) {
     if(cipher1.bx[z] != cipher3.bx[z])
       cout << "Cipher difference" << endl;
   }
-  */
+  *?
+  
   
   /*
   // Addition //
@@ -93,8 +98,12 @@ int main(int argc, char **argv) {
   scheme.add(cipherAdd, cipher0, cipher1);
   cout << "0, 1 DONE" << endl;
   */
+  cout << "cipher 2 : " << cipher2.logp << "; " << cipher2.logq << "; " << cipher2.n << endl;
+  cout << "cipher 3 : " << cipher3.logp << "; " << cipher3.logq << "; " << cipher3.n << endl;
+  cout << "Cipher add" << endl;
   Ciphertext cipherAdd2;
-  scheme.add(cipherAdd2, cipher2, cipher3);
+  //scheme.add(cipherAdd2, cipher2, cipher3);
+  scheme.addAndEqual(cipher2, cipher3);
   cout << "2, 3 DONE" << endl;
   
   /*
@@ -108,11 +117,12 @@ int main(int argc, char **argv) {
   long idx = 1;
   Ciphertext cipherRot;
   scheme.leftRotateFast(cipherRot, cipher1, idx);
-  
-  // Decrypt //
-  complex<double>* dvec1 = scheme.decrypt(secretKey, cipher1);
-  complex<double>* dvec2 = scheme.decrypt(secretKey, cipher2);
   */
+  // Decrypt //
+  cout << "Decrypt" << endl;
+  complex<double>* dvec0 = scheme.decrypt(secretKey, cipher2);
+  complex<double>* dvec1 = scheme.decrypt(secretKey, cipher3);
+  cout << "DONE" << endl;
 
   return 0;
 
@@ -128,25 +138,14 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     inFile.read(reinterpret_cast<char*>(&ciphertext.logp), sizeof(long));
     inFile.read(reinterpret_cast<char*>(&ciphertext.logq), sizeof(long)); 
     inFile.read(reinterpret_cast<char*>(&ciphertext.n), sizeof(long));
-    
-    cout << "LCT : logp - " << ciphertext.logp << endl;
-    cout << "LCT : logq - " << ciphertext.logq << endl;
-    cout << "LCT : n - " << ciphertext.n << endl;
-    // Resize the underlying vectors - Impossible with current array implementation.
-    //ciphertext.ax.resize(ciphertext.n);
-    //ciphertext.bx.resize(ciphertext.n);
 
     // Read ciphertext values
 
-    //for (auto& coeff : ciphertext.ax) {
-    for (int i = 0; i < ciphertext.n; i++) {
-        //inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
+    for (int i = 0; i < heaan::N; i++) {
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(NTL::ZZ));
     }
-    //for (auto& coeff : ciphertext.bx) {
-    for (int i = 0; i < ciphertext.n; i++) {
-        //inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
+    for (int i = 0; i < heaan::N; i++) {
+        inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(NTL::ZZ));
     }
 
     inFile.close();
@@ -193,15 +192,12 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     outFile.write(reinterpret_cast<const char*>(&ciphertext.logq), sizeof(long));
     outFile.write(reinterpret_cast<const char*>(&ciphertext.n), sizeof(long));
 
-    //for (const auto& coeff : &ciphertext.ax) {
-    for (int i = 0; i <ciphertext.n; i++) {
-        outFile.write(reinterpret_cast<const char*>(&(ciphertext.ax[i])), sizeof(std::complex<double>));
+    for (int i = 0; i < heaan::N; i++) {
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.ax[i])), sizeof(NTL::ZZ));
     }
-    /*for (const auto& coeff : &ciphertext.bx) {
-        outFile.write(reinterpret_cast<const char*>(&coeff), sizeof(uint64_t));
-    }*/
-    for (int i = 0; i < ciphertext.n; i++) {
-        outFile.write(reinterpret_cast<const char*>(&(ciphertext.bx[i])), sizeof(std::complex<double>));
+    
+    for (int i = 0; i < heaan::N; i++) {
+        outFile.write(reinterpret_cast<const char*>(&(ciphertext.bx[i])), sizeof(NTL::ZZ));
     }
 
     outFile.close();

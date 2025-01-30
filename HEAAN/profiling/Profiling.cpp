@@ -46,14 +46,14 @@ int main(int argc, char **argv) {
   complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
   complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
-  /* 
+   
   for(int a = 0; a < n; a++) {
     cout << mvec0[a].real() << " + " << mvec0[a].imag() << "i" << endl;
   }
   for(int a = 0; a < n; a++) {
     cout << mvec1[a].real() << " + " << mvec1[a].imag() << "i" << endl;
   }
-  */
+  
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
@@ -132,20 +132,26 @@ std::complex<double>* loadDouble(const std::string FileName) {
         throw std::runtime_error("Failed to open file for loading doubles.");
     }
     //complex<double>* loaded = new complex<double>[n];
-    std::vector<std::complex<double>> loadedVector;
+    //std::vector<std::complex<double>> loadedVector;
+    std::complex<double>* loadedArray = new std::complex<double>[1024];
+    int i = 0;
     complex<double> number;
     while (inFile >> number) {
-        // Create a complex number with the integer as the real part and 0 as the imaginary part
-        //std::complex<double> complexNumber(number, 0);
-        complex<double> complexNumber = number;
+      // Create a complex number with the integer as the real part and 0 as the imaginary part
+      //std::complex<double> complexNumber(number, 0);
+      complex<double> complexNumber = number;
 
-        // Add the complex number to the array
-        loadedVector.push_back(complexNumber);
+      // Add the complex number to the array
+      loadedArray[i] = complexNumber;
+      i++;
+      //loadedVector.push_back(complexNumber);
     }
-
-    return &loadedVector[0];
     
-    return 0;
+  inFile.close();
+  return loadedArray;
+  //return &loadedVector[0];
+    
+  return 0;
 }
 
 int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {

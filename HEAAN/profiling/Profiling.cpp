@@ -77,13 +77,13 @@ int main(int argc, char **argv) {
   scheme.add(cipherAdd2, cipher2, cipher3);
   cout << "2, 3 DONE" << endl;
 
-  /*
+  
   // Multiplication And Rescale //
   Ciphertext cipherMult;
   scheme.mult(cipherMult, cipher1, cipher2);
   Ciphertext cipherMultAfterReScale;
   scheme.reScaleBy(cipherMultAfterReScale, cipherMult, logp);
-  
+  /*
   // Rotation //
   long idx = 1;
   Ciphertext cipherRot;

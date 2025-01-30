@@ -65,10 +65,6 @@ int main(int argc, char **argv) {
   saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
   */
-  cout << sizeof(std::complex<double>) << endl;
-  cout << sizeof(double) << endl;
-  cout << sizeof(NTL::ZZ) << endl;
-  
 
   // Load ciphertexts //
   
@@ -102,8 +98,8 @@ int main(int argc, char **argv) {
   cout << "cipher 3 : " << cipher3.logp << "; " << cipher3.logq << "; " << cipher3.n << endl;
   cout << "Cipher add" << endl;
   Ciphertext cipherAdd2;
-  //scheme.add(cipherAdd2, cipher2, cipher3);
-  scheme.addAndEqual(cipher2, cipher3);
+  scheme.add(cipherAdd2, cipher2, cipher3);
+  //scheme.addAndEqual(cipher2, cipher3);
   cout << "2, 3 DONE" << endl;
   
   /*
@@ -178,7 +174,7 @@ std::complex<double>* loadDouble(const std::string FileName) {
   inFile.close();
   return loadedArray;
   //return &loadedVector[0];
-    
+  
   return 0;
 }
 

@@ -71,7 +71,11 @@ int main(int argc, char **argv) {
   cout << "Cipher add" << endl;
   Ciphertext cipherAdd;
   scheme.add(cipherAdd, cipher0, cipher1);
-  cout << "DONE" << endl;
+  cout << "0, 1 DONE" << endl;
+
+  Ciphertext cipherAdd2;
+  scheme.add(cipherAdd2, cipher2, cipher3);
+  cout << "2, 3 DONE" << endl;
 
   /*
   // Multiplication And Rescale //

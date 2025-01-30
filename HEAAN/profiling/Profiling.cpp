@@ -38,10 +38,6 @@ int main(int argc, char **argv) {
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec2 = EvaluatorUtils::randomComplexArray(slots);
 
-  //vector<complex<double>>* mvec0 = loadDouble("randint_1gb_0.txt");
-  //vector<complex<double>>* mvec1 = loadDouble("randint_1gb_1.txt");
-  //complex<double>* mvec0 = loadDouble(filename_0);
-  //complex<double>* mvec1 = loadDouble(filename_1);
   cout << "loading double" << endl; 
   complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
   complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
@@ -66,6 +62,10 @@ int main(int argc, char **argv) {
   saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
   
+  // Load ciphertexts //
+  Ciphertext cipher2, cipher3;
+  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
+  loadCiphertext("randint_cipher_1024_0.cip", cipher3);
   
   // Addition //
   cout << "Cipher add" << endl;

@@ -43,16 +43,6 @@ int main(int argc, char **argv) {
   //complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
 
-   
-  /*
-  for(int a = 0; a < n; a++) {
-    cout << mvec0[a].real() << " + " << mvec0[a].imag() << "i" << endl;
-  }
-  for(int a = 0; a < n; a++) {
-    cout << mvec1[a].real() << " + " << mvec1[a].imag() << "i" << endl;
-  }
-  */
-  
   /*
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
@@ -77,19 +67,6 @@ int main(int argc, char **argv) {
   cipher2 = SerializationUtils::readCiphertext("randint_cipher_1024_0.cip");
   cipher3 = SerializationUtils::readCiphertext("randint_cipher_1024_1.cip");
   cout << "read DONE" << endl;
-  /*
-  for(int z = 0; z < cipher2.n; z++) {
-    if(cipher0.ax[z] != cipher2.ax[z])
-      cout << "Cipher difference" << endl;
-    if(cipher0.bx[z] != cipher2.bx[z])
-      cout << "Cipher difference" << endl;
-    if(cipher1.ax[z] != cipher3.ax[z])
-      cout << "Cipher difference" << endl;
-    if(cipher1.bx[z] != cipher3.bx[z])
-      cout << "Cipher difference" << endl;
-  }
-  *?
-  
   
   /*
   // Addition //
@@ -98,15 +75,8 @@ int main(int argc, char **argv) {
   scheme.add(cipherAdd, cipher0, cipher1);
   cout << "0, 1 DONE" << endl;
   */
-  //cout << "cipher 2 : " << cipher2->logp << "; " << cipher2->logq << "; " << cipher2->n << endl;
-  //cout << "cipher 3 : " << cipher3->logp << "; " << cipher3->logq << "; " << cipher3->n << endl;
-  cout << "Cipher add" << endl;
-  /*
-  for(int z = 0; z < heaan::N; z++) {
-    cout << cipher0.ax[z] << " " << cipher0.bx[z] << " " << cipher1.ax[z] << " " << cipher1.bx[z] << endl;
-  }
-  */
 
+  cout << "Cipher add" << endl;
   Ciphertext cipherAdd2;
   scheme.add(cipherAdd2, *cipher2, *cipher3);
   cout << "2, 3 DONE" << endl;

@@ -138,17 +138,32 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     }
 
     // Read ciphertext parameters
-    inFile.read(reinterpret_cast<char*>(&ciphertext.logp), sizeof(long));
-    inFile.read(reinterpret_cast<char*>(&ciphertext.logq), sizeof(long)); 
-    inFile.read(reinterpret_cast<char*>(&ciphertext.n), sizeof(long));
+    inFile.read((char*)&ciphertext.logp, sizeof(long));
+    inFile.read((char*)&ciphertext.logq, sizeof(long)); 
+    inFile.read((char*)&ciphertext.n, sizeof(long));
+
+    // Ensure ax and bx are properly allocated
+    ciphertext.ax.resize(heaan::N);
+    ciphertext.bx.resize(heaan::N);
 
     // Read ciphertext values
-
     for (int i = 0; i < heaan::N; i++) {
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.ax[i])), sizeof(NTL::ZZ));
+        size_t ax_size;
+        inFile.read((char*)&ax_size, sizeof(size_t)); // Read string size
+
+        std::string ax_str(ax_size, '\0'); // Allocate string buffer
+        inFile.read(&ax_str[0], ax_size);  // Read string data
+
+        ciphertext.ax[i] = NTL::conv<NTL::ZZ>(ax_str); // Convert back to NTL::ZZ
     }
     for (int i = 0; i < heaan::N; i++) {
-        inFile.read(reinterpret_cast<char*>(&(ciphertext.bx[i])), sizeof(NTL::ZZ));
+        size_t bx_size;
+        inFile.read((char*)&bx_size, sizeof(size_t)); // Read string size
+
+        std::string bx_str(bx_size, '\0'); // Allocate string buffer
+        inFile.read(&bx_str[0], bx_size);  // Read string data
+
+        ciphertext.bx[i] = NTL::conv<NTL::ZZ>(bx_str); // Convert back to NTL::ZZ
     }
 
     inFile.close();

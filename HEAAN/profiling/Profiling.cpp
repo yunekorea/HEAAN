@@ -53,14 +53,14 @@ int main(int argc, char **argv) {
   }
   */
   
-  
+  /* 
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
   Ciphertext cipher1;
   scheme.encrypt(cipher1, mvec1, n, logp, logq);
   
-  /*
+  
   cout << "saving randint" << endl;
   saveCiphertext(cipher0, "randint_cipher_1024_0.cip");
   cout << "0 DONE" << endl;
@@ -105,8 +105,8 @@ int main(int argc, char **argv) {
   }
   */
 
-  //Ciphertext cipherAdd2;
-  //scheme.add(cipherAdd2, cipher2, cipher3);
+  Ciphertext cipherAdd2;
+  scheme.add(cipherAdd2, cipher2, cipher3);
   cout << "2, 3 DONE" << endl;
   
   /*
@@ -143,27 +143,30 @@ int loadCiphertext(string FileName, Ciphertext &ciphertext) {
     inFile.read((char*)&ciphertext.n, sizeof(long));
 
     // Ensure ax and bx are properly allocated
-    ciphertext.ax.resize(heaan::N);
-    ciphertext.bx.resize(heaan::N);
+    //ciphertext.ax.resize(heaan::N);
+    //ciphertext.bx.resize(heaan::N);
 
     // Read ciphertext values
     for (int i = 0; i < heaan::N; i++) {
+        /*
         size_t ax_size;
         inFile.read((char*)&ax_size, sizeof(size_t)); // Read string size
-
         std::string ax_str(ax_size, '\0'); // Allocate string buffer
         inFile.read(&ax_str[0], ax_size);  // Read string data
-
         ciphertext.ax[i] = NTL::conv<NTL::ZZ>(ax_str); // Convert back to NTL::ZZ
+        */
+        inFile.read((char*)&ciphertext.ax[i], sizeof(NTL::ZZ));
+
     }
     for (int i = 0; i < heaan::N; i++) {
+        /*
         size_t bx_size;
         inFile.read((char*)&bx_size, sizeof(size_t)); // Read string size
-
         std::string bx_str(bx_size, '\0'); // Allocate string buffer
         inFile.read(&bx_str[0], bx_size);  // Read string data
-
         ciphertext.bx[i] = NTL::conv<NTL::ZZ>(bx_str); // Convert back to NTL::ZZ
+        */
+        inFile.read((char*)&ciphertext.bx[i], sizeof(NTL::ZZ));
     }
 
     inFile.close();
@@ -211,17 +214,23 @@ int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
     outFile.write((char*)&ciphertext.n, sizeof(long));
 
     for (int i = 0; i < heaan::N; i++) {
+      /*
       std::string ax_str = NTL::conv<std::string>(ciphertext.ax[i]);
       size_t ax_size = ax_str.size();
       outFile.write((char*)&ax_size, sizeof(size_t));
       outFile.write(ax_str.data(), ax_size);
+      */
+      outFile.write((char*)&ciphertext.ax[i], sizeof(NTL::ZZ));
     }
     
     for (int i = 0; i < heaan::N; i++) {
+      /*
       std::string bx_str = NTL::conv<std::string>(ciphertext.bx[i]);
       size_t bx_size = bx_str.size();
       outFile.write((char*)&bx_size, sizeof(size_t));
       outFile.write(bx_str.data(), bx_size);
+      */
+      outFile.write((char*)&ciphertext.bx[i], sizeof(NTL::ZZ));
     }
 
     outFile.close();

@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
   }
   */
   
-  /* 
+  /*
   // Encrypt Two Arry of Complex //
   Ciphertext cipher0;
   scheme.encrypt(cipher0, mvec0, n, logp, logq);
@@ -62,19 +62,21 @@ int main(int argc, char **argv) {
   
   
   cout << "saving randint" << endl;
-  saveCiphertext(cipher0, "randint_cipher_1024_0.cip");
+  SerializationUtils::writeCiphertext(cipher0, "randint_cipher_1024_0.cip");
   cout << "0 DONE" << endl;
-  saveCiphertext(cipher1, "randint_cipher_1024_1.cip");
+  SerializationUtils::writeCiphertext(cipher1, "randint_cipher_1024_1.cip");
   cout << "1 DONE" << endl;
-  */
+  */ 
 
   // Load ciphertexts //
   
-  Ciphertext cipher2;
-  Ciphertext cipher3;
-  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
-  loadCiphertext("randint_cipher_1024_1.cip", cipher3);
-
+  Ciphertext* cipher2;
+  Ciphertext* cipher3;
+  //loadCiphertext("randint_cipher_1024_0.cip", cipher2);
+  //loadCiphertext("randint_cipher_1024_1.cip", cipher3);
+  cipher2 = SerializationUtils::readCiphertext("randint_cipher_1024_0.cip");
+  cipher3 = SerializationUtils::readCiphertext("randint_cipher_1024_1.cip");
+  cout << "read DONE" << endl;
   /*
   for(int z = 0; z < cipher2.n; z++) {
     if(cipher0.ax[z] != cipher2.ax[z])
@@ -96,8 +98,8 @@ int main(int argc, char **argv) {
   scheme.add(cipherAdd, cipher0, cipher1);
   cout << "0, 1 DONE" << endl;
   */
-  cout << "cipher 2 : " << cipher2.logp << "; " << cipher2.logq << "; " << cipher2.n << endl;
-  cout << "cipher 3 : " << cipher3.logp << "; " << cipher3.logq << "; " << cipher3.n << endl;
+  //cout << "cipher 2 : " << cipher2->logp << "; " << cipher2->logq << "; " << cipher2->n << endl;
+  //cout << "cipher 3 : " << cipher3->logp << "; " << cipher3->logq << "; " << cipher3->n << endl;
   cout << "Cipher add" << endl;
   /*
   for(int z = 0; z < heaan::N; z++) {
@@ -106,7 +108,7 @@ int main(int argc, char **argv) {
   */
 
   Ciphertext cipherAdd2;
-  scheme.add(cipherAdd2, cipher2, cipher3);
+  scheme.add(cipherAdd2, *cipher2, *cipher3);
   cout << "2, 3 DONE" << endl;
   
   /*
@@ -123,8 +125,8 @@ int main(int argc, char **argv) {
   */
   // Decrypt //
   cout << "Decrypt" << endl;
-  complex<double>* dvec0 = scheme.decrypt(secretKey, cipher2);
-  complex<double>* dvec1 = scheme.decrypt(secretKey, cipher3);
+  complex<double>* dvec0 = scheme.decrypt(secretKey, *cipher2);
+  complex<double>* dvec1 = scheme.decrypt(secretKey, *cipher3);
   cout << "DONE" << endl;
 
   return 0;

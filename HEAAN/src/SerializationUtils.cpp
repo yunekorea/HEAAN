@@ -6,6 +6,7 @@
 * work.  If not, see <http://creativecommons.org/licenses/by-nc/3.0/>.
 */
 #include "SerializationUtils.h"
+#include <iostream>
 
 using namespace std;
 using namespace NTL;
@@ -45,20 +46,22 @@ Ciphertext* SerializationUtils::readCiphertext(string path) {
 	fin.read(reinterpret_cast<char*>(&n), sizeof(long));
 	fin.read(reinterpret_cast<char*>(&logp), sizeof(long));
 	fin.read(reinterpret_cast<char*>(&logq), sizeof(long));
-
+  
 	long np = ceil(((double)logq + 1)/8);
 	unsigned char* bytes = new unsigned char[np];
-	Ciphertext cipher(logp, logq, n);
+	//Ciphertext cipher(logp, logq, n);
+  Ciphertext* cipher = new Ciphertext(logp, logq, n);
 	for (long i = 0; i < N; ++i) {
 		fin.read(reinterpret_cast<char*>(bytes), np);
-		ZZFromBytes(cipher.ax[i], bytes, np);
+		ZZFromBytes(cipher->ax[i], bytes, np);
 	}
 	for (long i = 0; i < N; ++i) {
 		fin.read(reinterpret_cast<char*>(bytes), np);
-		ZZFromBytes(cipher.bx[i], bytes, np);
+		ZZFromBytes(cipher->bx[i], bytes, np);
 	}
 	fin.close();
-	return &cipher;
+
+	return cipher;
 }
 
 void SerializationUtils::writeKey(Key* key, string path) {

@@ -35,12 +35,12 @@ int main(int argc, char **argv) {
   scheme.addRightRotKeys(secretKey); ///< When you need right rotation for the vectorized message
   
   // Make Random Array of Complex //
-  complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
-  complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
+  //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
+  //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
   cout << "loading double" << endl; 
-  //complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
-  //complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
+  complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
+  complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
 
   /*

@@ -38,8 +38,8 @@ int main(int argc, char **argv) {
   //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
-  SFileName0 = "randint_cipher_1024_0_";
-  SFileName1 = "randint_cipher_1024_1_";
+  std::string SFileName0 = "randint_cipher_1024_0_";
+  std::string SFileName1 = "randint_cipher_1024_1_";
   Ciphertext cipher0[1024];
   Ciphertext cipher1[1024];
   complex<double>* mvec0[1024];

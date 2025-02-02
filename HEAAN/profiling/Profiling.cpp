@@ -38,12 +38,29 @@ int main(int argc, char **argv) {
   //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
-  /*
-  cout << "loading double" << endl; 
-  complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
-  complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
-  cout << "DONE" << endl;
-  */
+  SFileName0 = "randint_cipher_1024_0_";
+  SFileName1 = "randint_cipher_1024_1";
+  Ciphertext cipher0[1024];
+  ciphertext cipher1[1024];
+  complex<double>* mvec0[1024];
+  complex<double>* mvec1[1024];
+  for(int i = 0; i < 1024; i++) {
+    cout << "loading double : " << i << " : "; 
+    mvec0[i] = loadDouble("randint_1024_0.txt");
+    mvec1[i] = loadDouble("randint_1024_1.txt");
+    cout << "DONE" << endl;
+
+    cout << "Encrypting : " << i << " : ";
+    scheme.encrypt(cipher0[i], mvec0[i], n, logp, logq);
+    scheme.encrypt(cipher1[i], mvec1[i], n, logp, logq);
+    cout << "DONE" << endl;
+
+    cout << "saving ciphertext : " << i << " : ";
+    SerializationUtils::writeCiphertext(cipher0, SFileName0 + string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1, SFileName1 + string(i) + ".cip");
+    cout << "DONE" << endl;
+  }
+  
 
   /*
   // Encrypt Two Arry of Complex //
@@ -61,15 +78,16 @@ int main(int argc, char **argv) {
   */ 
 
   // Load ciphertexts //
-  
+  /*
   Ciphertext* cipher2;
   Ciphertext* cipher3;
-  //loadCiphertext("randint_cipher_1024_0.cip", cipher2);
-  //loadCiphertext("randint_cipher_1024_1.cip", cipher3);
+  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
+  loadCiphertext("randint_cipher_1024_1.cip", cipher3);
   cipher2 = SerializationUtils::readCiphertext("randint_cipher_1024_0.cip");
   cipher3 = SerializationUtils::readCiphertext("randint_cipher_1024_1.cip");
   cout << "read DONE" << endl;
-  
+  */
+
   /*
   // Addition //
   cout << "Cipher add" << endl;
@@ -98,6 +116,7 @@ int main(int argc, char **argv) {
   scheme.leftRotateFast(cipherRot, cipher1, idx);
   */
   // Decrypt //
+  /*
   cout << "Decrypt" << endl;
   complex<double>* dvec0 = scheme.decrypt(secretKey, *cipher2);
   complex<double>* dvec1 = scheme.decrypt(secretKey, *cipher3);
@@ -107,6 +126,7 @@ int main(int argc, char **argv) {
   for(int i = 0; i < heaan::N; i++) {
     dvecadd[i] = dvec0[i] + dvec1[i];
   }
+  */
 
   return 0;
 

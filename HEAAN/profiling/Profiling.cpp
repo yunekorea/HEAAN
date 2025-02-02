@@ -77,19 +77,21 @@ int main(int argc, char **argv) {
   scheme.add(cipherAdd, cipher0, cipher1);
   cout << "0, 1 DONE" << endl;
   */
-
+  
+  /*
   cout << "Cipher add" << endl;
   Ciphertext cipherAdd2;
   scheme.add(cipherAdd2, *cipher2, *cipher3);
   cout << "2, 3 DONE" << endl;
+  */
   
-  /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;
-  scheme.mult(cipherMult, cipher0, cipher1);
+  scheme.mult(cipherMult, *cipher2, *cipher3);
   Ciphertext cipherMultAfterReScale;
   scheme.reScaleBy(cipherMultAfterReScale, cipherMult, logp);
   
+  /*
   // Rotation //
   long idx = 1;
   Ciphertext cipherRot;

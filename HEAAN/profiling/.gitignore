@@ -1,4 +1,4 @@
 *.txt
 *.cip
-gmon.out
+gmon*.out
 ProfilingHEAAN

@@ -85,13 +85,13 @@ int main(int argc, char **argv) {
   cout << "2, 3 DONE" << endl;
   */
   
+  /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;
   scheme.mult(cipherMult, *cipher2, *cipher3);
   Ciphertext cipherMultAfterReScale;
   scheme.reScaleBy(cipherMultAfterReScale, cipherMult, logp);
   
-  /*
   // Rotation //
   long idx = 1;
   Ciphertext cipherRot;
@@ -102,6 +102,11 @@ int main(int argc, char **argv) {
   complex<double>* dvec0 = scheme.decrypt(secretKey, *cipher2);
   complex<double>* dvec1 = scheme.decrypt(secretKey, *cipher3);
   cout << "DONE" << endl;
+
+  complex<double> dvecadd[heaan::N];
+  for(int i = 0; i < heaan::N; i++) {
+    dvecadd[i] = dvec0[i] + dvec1[i];
+  }
 
   return 0;
 

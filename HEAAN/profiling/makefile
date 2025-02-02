@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++11 -p -g -Wall -O0 -I../src -pthread
+CXXFLAGS = -std=c++11 -p -g -Wall -O2 -I../src -pthread
 LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread
 
 # Source and object files

@@ -38,8 +38,10 @@ int main(int argc, char **argv) {
   //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
+  
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
+  /*
   Ciphertext cipher0[1024];
   Ciphertext cipher1[1024];
   complex<double>* mvec0[1024];
@@ -56,10 +58,11 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "saving ciphertext : " << i << " : ";
-    SerializationUtils::writeCiphertext(cipher0, "./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    SerializationUtils::writeCiphertext(cipher1, "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher0[i], "./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1[i], "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
+  */
   
 
   /*

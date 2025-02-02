@@ -38,10 +38,12 @@ int main(int argc, char **argv) {
   //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
+  /*
   cout << "loading double" << endl; 
   complex<double>* mvec0 = loadDouble("randint_1024_0.txt");
   complex<double>* mvec1 = loadDouble("randint_1024_1.txt");
   cout << "DONE" << endl;
+  */
 
   /*
   // Encrypt Two Arry of Complex //

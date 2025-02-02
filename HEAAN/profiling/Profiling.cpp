@@ -39,9 +39,9 @@ int main(int argc, char **argv) {
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
 
   SFileName0 = "randint_cipher_1024_0_";
-  SFileName1 = "randint_cipher_1024_1";
+  SFileName1 = "randint_cipher_1024_1_";
   Ciphertext cipher0[1024];
-  ciphertext cipher1[1024];
+  Ciphertext cipher1[1024];
   complex<double>* mvec0[1024];
   complex<double>* mvec1[1024];
   for(int i = 0; i < 1024; i++) {
@@ -56,8 +56,8 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "saving ciphertext : " << i << " : ";
-    SerializationUtils::writeCiphertext(cipher0, SFileName0 + string(i) + ".cip");
-    SerializationUtils::writeCiphertext(cipher1, SFileName1 + string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher0, "./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1, "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
   
@@ -78,15 +78,29 @@ int main(int argc, char **argv) {
   */ 
 
   // Load ciphertexts //
-  /*
-  Ciphertext* cipher2;
-  Ciphertext* cipher3;
-  loadCiphertext("randint_cipher_1024_0.cip", cipher2);
-  loadCiphertext("randint_cipher_1024_1.cip", cipher3);
-  cipher2 = SerializationUtils::readCiphertext("randint_cipher_1024_0.cip");
-  cipher3 = SerializationUtils::readCiphertext("randint_cipher_1024_1.cip");
-  cout << "read DONE" << endl;
-  */
+  SFileName0 = "randint_cipher_1024_0_";
+  SFileName1 = "randint_cipher_1024_1_";
+  Ciphertext* cipher2[1024];
+  Ciphertext* cipher3[1024];
+  Ciphertext cipherAdd[1024];
+  complex<double>* mvec2[1024];
+  complex<double>* mvec3[1024];
+  complex<double>* dvecadd[1024];
+  for(int i = 0; i < 1024; i++) { 
+    cout << "Reading ciphertext : " << i << " : ";
+    cipher2[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher3[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cout << "DONE" << endl;
+
+    cout << "Ciphertext add : " << i << " : ";
+    scheme.add(cipherAdd[i], *cipher2[i], *cipher3[i]);
+    cout << "DONE" << endl;
+
+    cout << "Decrypt : " << i << " : ";
+    scheme.decrypt(secretKey, cipherAdd[i]);
+    cout << "DONE" << endl;
+
+  }
 
   /*
   // Addition //

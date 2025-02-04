@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "Decrypt : " << i << " : ";
-    devcadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
+    dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
     cout << "DONE" << endl;
 
   }

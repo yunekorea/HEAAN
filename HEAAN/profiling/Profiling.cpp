@@ -24,7 +24,8 @@ int main(int argc, char **argv) {
   long slots = n;
   long numThread = 8;
   
-  int iter = 20480;
+  //int iter = 1 << 30;
+  int iter = 1 << 10;
 
   // Construct and Generate Public Keys //
   srand(time(NULL));
@@ -44,6 +45,7 @@ int main(int argc, char **argv) {
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
   
+  /*
   Ciphertext cipher0[iter];
   Ciphertext cipher1[iter];
   complex<double>* mvec0[iter];
@@ -60,10 +62,11 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "saving ciphertext : " << i << " : ";
-    SerializationUtils::writeCiphertext(cipher0[i], "./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    SerializationUtils::writeCiphertext(cipher1[i], "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher0[i], "./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1[i], "./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
+  */
   
   
 
@@ -107,8 +110,29 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
-  */
+  */ 
 
+  Ciphertext* cipher4[iter];
+  Ciphertext* cipher5[iter];
+  Ciphertext cipherMult[iter];
+  complex<double>* mvec4[iter];
+  complex<double>* mvec5[iter];
+  complex<double>* dvecmult[iter];
+  for(int i = 0; i < iter; i++) { 
+    cout << "Reading ciphertext : " << i << " : ";
+    cipher4[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher5[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cout << "DONE" << endl;
+
+    cout << "Ciphertext mult : " << i << " : ";
+    scheme.mult(cipherMult[i], *cipher4[i], *cipher5[i]);
+    cout << "DONE" << endl;
+
+    cout << "Decrypt : " << i << " : ";
+    scheme.decrypt(secretKey, cipherMult[i]);
+    cout << "DONE" << endl;
+
+  }
   /*
   // Addition //
   cout << "Cipher add" << endl;

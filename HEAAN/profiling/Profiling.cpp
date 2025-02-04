@@ -23,7 +23,9 @@ int main(int argc, char **argv) {
   long n = 1 << logn;
   long slots = n;
   long numThread = 8;
-	
+  
+  int iter = 20480;
+
   // Construct and Generate Public Keys //
   srand(time(NULL));
   //SetNumThreads(numThread);
@@ -41,12 +43,12 @@ int main(int argc, char **argv) {
   
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
-  /*
-  Ciphertext cipher0[1024];
-  Ciphertext cipher1[1024];
-  complex<double>* mvec0[1024];
-  complex<double>* mvec1[1024];
-  for(int i = 0; i < 1024; i++) {
+  
+  Ciphertext cipher0[iter];
+  Ciphertext cipher1[iter];
+  complex<double>* mvec0[iter];
+  complex<double>* mvec1[iter];
+  for(int i = 0; i < iter; i++) {
     cout << "loading double : " << i << " : "; 
     mvec0[i] = loadDouble("randint_1024_0.txt");
     mvec1[i] = loadDouble("randint_1024_1.txt");
@@ -62,7 +64,7 @@ int main(int argc, char **argv) {
     SerializationUtils::writeCiphertext(cipher1[i], "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
-  */
+  
   
 
   /*
@@ -80,16 +82,17 @@ int main(int argc, char **argv) {
   cout << "1 DONE" << endl;
   */ 
 
+  /*
   // Load ciphertexts //
   SFileName0 = "randint_cipher_1024_0_";
   SFileName1 = "randint_cipher_1024_1_";
-  Ciphertext* cipher2[1024];
-  Ciphertext* cipher3[1024];
-  Ciphertext cipherAdd[1024];
-  complex<double>* mvec2[1024];
-  complex<double>* mvec3[1024];
-  complex<double>* dvecadd[1024];
-  for(int i = 0; i < 1024; i++) { 
+  Ciphertext* cipher2[iter];
+  Ciphertext* cipher3[iter];
+  Ciphertext cipherAdd[iter];
+  complex<double>* mvec2[iter];
+  complex<double>* mvec3[iter];
+  complex<double>* dvecadd[iter];
+  for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
     cipher2[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
     cipher3[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
@@ -104,6 +107,7 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
+  */
 
   /*
   // Addition //

@@ -46,6 +46,7 @@ int main(int argc, char **argv) {
   std::string SFileName1 = "randint_cipher_1024_1_";
   
   /*
+  // Encrypt to ciphertexts //
   Ciphertext cipher0[iter];
   Ciphertext cipher1[iter];
   complex<double>* mvec0[iter];
@@ -85,8 +86,8 @@ int main(int argc, char **argv) {
   cout << "1 DONE" << endl;
   */ 
 
-  /*
-  // Load ciphertexts //
+  
+  // Load/add ciphertexts //
   SFileName0 = "randint_cipher_1024_0_";
   SFileName1 = "randint_cipher_1024_1_";
   Ciphertext* cipher2[iter];
@@ -106,12 +107,13 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "Decrypt : " << i << " : ";
-    scheme.decrypt(secretKey, cipherAdd[i]);
+    devcadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
     cout << "DONE" << endl;
 
   }
-  */ 
-
+   
+  /*
+  // Load/multiply ciphertexts //
   Ciphertext* cipher4[iter];
   Ciphertext* cipher5[iter];
   Ciphertext cipherMult[iter];
@@ -129,10 +131,12 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "Decrypt : " << i << " : ";
-    scheme.decrypt(secretKey, cipherMult[i]);
+    dvecmult[i] = scheme.decrypt(secretKey, cipherMult[i]);
     cout << "DONE" << endl;
 
   }
+
+  */
   /*
   // Addition //
   cout << "Cipher add" << endl;

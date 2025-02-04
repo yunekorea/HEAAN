@@ -24,8 +24,7 @@ int main(int argc, char **argv) {
   long slots = n;
   long numThread = 8;
   
-  //int iter = 1 << 30;
-  int iter = 1 << 10;
+  int iter = 1 << 30;
 
   // Construct and Generate Public Keys //
   srand(time(NULL));
@@ -45,7 +44,7 @@ int main(int argc, char **argv) {
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
   
-  /*
+  
   // Encrypt to ciphertexts //
   Ciphertext cipher0[iter];
   Ciphertext cipher1[iter];
@@ -67,7 +66,7 @@ int main(int argc, char **argv) {
     SerializationUtils::writeCiphertext(cipher1[i], "./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
-  */
+  
   
   
 
@@ -86,7 +85,7 @@ int main(int argc, char **argv) {
   cout << "1 DONE" << endl;
   */ 
 
-  
+  /*
   // Load/add ciphertexts //
   SFileName0 = "randint_cipher_1024_0_";
   SFileName1 = "randint_cipher_1024_1_";
@@ -98,8 +97,8 @@ int main(int argc, char **argv) {
   complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
-    cipher2[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher3[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cipher2[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher3[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
 
     cout << "Ciphertext add : " << i << " : ";
@@ -111,6 +110,7 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
+  */
    
   /*
   // Load/multiply ciphertexts //
@@ -122,8 +122,8 @@ int main(int argc, char **argv) {
   complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
-    cipher4[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher5[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cipher4[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher5[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
 
     cout << "Ciphertext mult : " << i << " : ";
@@ -135,8 +135,9 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
-
   */
+
+  
   /*
   // Addition //
   cout << "Cipher add" << endl;

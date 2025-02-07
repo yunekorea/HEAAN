@@ -86,8 +86,6 @@ int main(int argc, char **argv) {
 
   // Load/add ciphertexts //
   if(string(argv[1]) == "cipadd"){
-  SFileName0 = "randint_cipher_1024_0_";
-  SFileName1 = "randint_cipher_1024_1_";
   Ciphertext* cipher2[iter];
   Ciphertext* cipher3[iter];
   Ciphertext cipherAdd[iter];

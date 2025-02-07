@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
   
-  /* 
   // Encrypt to ciphertexts //
+  if(string(argv[1]) == "enc") {
   Ciphertext cipher0[iter];
   Ciphertext cipher1[iter];
   complex<double>* mvec0[iter];
@@ -67,9 +67,7 @@ int main(int argc, char **argv) {
     SerializationUtils::writeCiphertext(cipher1[i], "./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
-  */
-  
-  
+  }
 
   /*
   // Encrypt Two Arry of Complex //
@@ -86,8 +84,8 @@ int main(int argc, char **argv) {
   cout << "1 DONE" << endl;
   */ 
 
-  /*
   // Load/add ciphertexts //
+  if(string(argv[1]) == "cipadd"){
   SFileName0 = "randint_cipher_1024_0_";
   SFileName1 = "randint_cipher_1024_1_";
   Ciphertext* cipher2[iter];
@@ -111,10 +109,10 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
-  */
-   
-  /*
-  // Load/multiply ciphertexts //
+  }
+  
+  // multiply ciphertexts //
+  if(string(argv[1]) == "cipmult") {
   Ciphertext* cipher4[iter];
   Ciphertext* cipher5[iter];
   Ciphertext cipherMult[iter];
@@ -136,10 +134,10 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
-  */
+  }
 
-  /*
   // Add decrypted //
+  if(string(argv[1]) == "decadd") {
   Ciphertext* cipher6[iter];
   Ciphertext* cipher7[iter];
   complex<double>* dvec0[iter];
@@ -165,9 +163,10 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
   }
-  */
+  }
   
   // Multiply decrypted //
+  if(string(argv[1]) == "decmult") {
   Ciphertext* cipher8[iter];
   Ciphertext* cipher9[iter];
   complex<double>* dvec2[iter];
@@ -192,6 +191,7 @@ int main(int argc, char **argv) {
     }
     cout << "DONE" << endl;
 
+  }
   }
   
   /*

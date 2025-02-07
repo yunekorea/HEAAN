@@ -4,11 +4,8 @@ using namespace std;
 using namespace NTL;
 using namespace heaan;
 
-int loadCiphertext(string FileName, Ciphertext &ciphertext);
-std::complex<double>* loadInt(std::string FileName);
-std::complex<double>* loadDouble(const std::string FileName);
 
-int saveCiphertext(Ciphertext &ciphertext, std::string FileName);
+std::complex<double>* loadDouble(const std::string FileName);
 
 int main(int argc, char **argv) {
   /*

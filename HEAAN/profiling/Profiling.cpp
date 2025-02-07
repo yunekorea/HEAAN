@@ -89,8 +89,6 @@ int main(int argc, char **argv) {
   Ciphertext* cipher2[iter];
   Ciphertext* cipher3[iter];
   Ciphertext cipherAdd[iter];
-  complex<double>* mvec2[iter];
-  complex<double>* mvec3[iter];
   complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
@@ -114,8 +112,6 @@ int main(int argc, char **argv) {
   Ciphertext* cipher4[iter];
   Ciphertext* cipher5[iter];
   Ciphertext cipherMult[iter];
-  complex<double>* mvec4[iter];
-  complex<double>* mvec5[iter];
   complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";

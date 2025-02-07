@@ -63,8 +63,8 @@ int main(int argc, char **argv) {
     cout << "DONE" << endl;
 
     cout << "saving ciphertext : " << i << " : ";
-    SerializationUtils::writeCiphertext(cipher0[i], "./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    SerializationUtils::writeCiphertext(cipher1[i], "./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher0[i], "./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1[i], "./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
   }
   }
@@ -92,8 +92,8 @@ int main(int argc, char **argv) {
   complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
-    cipher2[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher3[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cipher2[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher3[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
 
     cout << "Ciphertext add : " << i << " : ";
@@ -115,8 +115,8 @@ int main(int argc, char **argv) {
   complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Reading ciphertext : " << i << " : ";
-    cipher4[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher5[i] = SerializationUtils::readCiphertext("./1gb_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    cipher4[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher5[i] = SerializationUtils::readCiphertext("./MIL_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
 
     cout << "Ciphertext mult : " << i << " : ";

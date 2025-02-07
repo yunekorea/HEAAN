@@ -69,21 +69,6 @@ int main(int argc, char **argv) {
   }
   }
 
-  /*
-  // Encrypt Two Arry of Complex //
-  Ciphertext cipher0;
-  scheme.encrypt(cipher0, mvec0, n, logp, logq);
-  Ciphertext cipher1;
-  scheme.encrypt(cipher1, mvec1, n, logp, logq);
-  
-  
-  cout << "saving randint" << endl;
-  SerializationUtils::writeCiphertext(cipher0, "randint_cipher_1024_0.cip");
-  cout << "0 DONE" << endl;
-  SerializationUtils::writeCiphertext(cipher1, "randint_cipher_1024_1.cip");
-  cout << "1 DONE" << endl;
-  */ 
-
   // Load/add ciphertexts //
   if(string(argv[1]) == "cipadd"){
   Ciphertext* cipher2[iter];
@@ -187,22 +172,7 @@ int main(int argc, char **argv) {
 
   }
   }
-  
-  /*
-  // Addition //
-  cout << "Cipher add" << endl;
-  Ciphertext cipherAdd;
-  scheme.add(cipherAdd, cipher0, cipher1);
-  cout << "0, 1 DONE" << endl;
-  */
-  
-  /*
-  cout << "Cipher add" << endl;
-  Ciphertext cipherAdd2;
-  scheme.add(cipherAdd2, *cipher2, *cipher3);
-  cout << "2, 3 DONE" << endl;
-  */
-  
+
   /*
   // Multiplication And Rescale //
   Ciphertext cipherMult;
@@ -230,49 +200,6 @@ int main(int argc, char **argv) {
 
   return 0;
 
-}
-
-int loadCiphertext(string FileName, Ciphertext &ciphertext) {
-    std::ifstream inFile(FileName, std::ios::binary);
-    if (!inFile) {
-        throw std::runtime_error("Failed to open file for loading ciphertext.");
-    }
-
-    // Read ciphertext parameters
-    inFile.read((char*)&ciphertext.logp, sizeof(long));
-    inFile.read((char*)&ciphertext.logq, sizeof(long)); 
-    inFile.read((char*)&ciphertext.n, sizeof(long));
-
-    // Ensure ax and bx are properly allocated
-    //ciphertext.ax.resize(heaan::N);
-    //ciphertext.bx.resize(heaan::N);
-
-    // Read ciphertext values
-    for (int i = 0; i < heaan::N; i++) {
-        /*
-        size_t ax_size;
-        inFile.read((char*)&ax_size, sizeof(size_t)); // Read string size
-        std::string ax_str(ax_size, '\0'); // Allocate string buffer
-        inFile.read(&ax_str[0], ax_size);  // Read string data
-        ciphertext.ax[i] = NTL::conv<NTL::ZZ>(ax_str); // Convert back to NTL::ZZ
-        */
-        inFile.read((char*)&ciphertext.ax[i], sizeof(NTL::ZZ));
-
-    }
-    for (int i = 0; i < heaan::N; i++) {
-        /*
-        size_t bx_size;
-        inFile.read((char*)&bx_size, sizeof(size_t)); // Read string size
-        std::string bx_str(bx_size, '\0'); // Allocate string buffer
-        inFile.read(&bx_str[0], bx_size);  // Read string data
-        ciphertext.bx[i] = NTL::conv<NTL::ZZ>(bx_str); // Convert back to NTL::ZZ
-        */
-        inFile.read((char*)&ciphertext.bx[i], sizeof(NTL::ZZ));
-    }
-
-    inFile.close();
-    
-    return 0;
 }
 
 std::complex<double>* loadDouble(const std::string FileName) {
@@ -304,37 +231,3 @@ std::complex<double>* loadDouble(const std::string FileName) {
   return 0;
 }
 
-int saveCiphertext(Ciphertext &ciphertext, std::string FileName) {
-    
-    std::ofstream outFile(FileName, std::ios::binary);
-    if (!outFile) {
-        throw std::runtime_error("Failed to open file for saving ciphertext.");
-    }
-    outFile.write((char*)&ciphertext.logp, sizeof(long));
-    outFile.write((char*)&ciphertext.logq, sizeof(long));
-    outFile.write((char*)&ciphertext.n, sizeof(long));
-
-    for (int i = 0; i < heaan::N; i++) {
-      /*
-      std::string ax_str = NTL::conv<std::string>(ciphertext.ax[i]);
-      size_t ax_size = ax_str.size();
-      outFile.write((char*)&ax_size, sizeof(size_t));
-      outFile.write(ax_str.data(), ax_size);
-      */
-      outFile.write((char*)&ciphertext.ax[i], sizeof(NTL::ZZ));
-    }
-    
-    for (int i = 0; i < heaan::N; i++) {
-      /*
-      std::string bx_str = NTL::conv<std::string>(ciphertext.bx[i]);
-      size_t bx_size = bx_str.size();
-      outFile.write((char*)&bx_size, sizeof(size_t));
-      outFile.write(bx_str.data(), bx_size);
-      */
-      outFile.write((char*)&ciphertext.bx[i], sizeof(NTL::ZZ));
-    }
-
-    outFile.close();
-    
-    return 0;
-}

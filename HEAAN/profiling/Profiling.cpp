@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     SerializationUtils::writeCiphertext(cipher0[i], "./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
     SerializationUtils::writeCiphertext(cipher1[i], "./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
     cout << "DONE" << endl;
-  }
+    }
   }
 
   // Load/add ciphertexts //
@@ -85,8 +85,7 @@ int main(int argc, char **argv) {
     cout << "Decrypt : " << i << " : ";
     dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
     cout << "DONE" << endl;
-
-  }
+    }
   }
   
   // multiply ciphertexts //
@@ -108,8 +107,7 @@ int main(int argc, char **argv) {
     cout << "Decrypt : " << i << " : ";
     dvecmult[i] = scheme.decrypt(secretKey, cipherMult[i]);
     cout << "DONE" << endl;
-
-  }
+    }
   }
 
   // Add decrypted //
@@ -137,8 +135,7 @@ int main(int argc, char **argv) {
       dvecadd[i] = dvectemp;
     }
     cout << "DONE" << endl;
-
-  }
+    }
   }
   
   // Multiply decrypted //
@@ -166,8 +163,7 @@ int main(int argc, char **argv) {
       dvecmult[i] = dvectemp;
     }
     cout << "DONE" << endl;
-
-  }
+    }
   }
 
   /*

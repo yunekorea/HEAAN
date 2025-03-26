@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
   
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
-  std::string WorkingDir = "/mnt/ssd"
+  std::string WorkingDir = "/mnt/ssd";
   
   // Encrypt to ciphertexts //
   if(string(argv[1]) == "enc") {

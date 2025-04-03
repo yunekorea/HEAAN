@@ -2,3 +2,4 @@
 *.cip
 gmon*.out
 ProfilingHEAAN
+prof_data_*

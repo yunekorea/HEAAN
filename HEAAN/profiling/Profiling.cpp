@@ -21,7 +21,8 @@ int main(int argc, char **argv) {
   long slots = n;
   long numThread = 8;
   
-  int iter = 214600;
+  //int iter = 214600;
+  int iter = 1024;
   cout << "iterator setup done" << endl;
   // Construct and Generate Public Keys //
   srand(time(NULL));

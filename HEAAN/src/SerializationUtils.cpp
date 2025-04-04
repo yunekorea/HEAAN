@@ -73,13 +73,13 @@ void SerializationUtils::writeKey(Key* key, string path) {
 }
 
 Key* SerializationUtils::readKey(string path) {
-	Key key;
+	Key *key = new Key;
 	fstream fin;
 	fin.open(path, ios::binary|ios::in);
-	fin.read(reinterpret_cast<char*>(key.rax), Nnprimes*sizeof(uint64_t));
-	fin.read(reinterpret_cast<char*>(key.rbx), Nnprimes*sizeof(uint64_t));
+	fin.read(reinterpret_cast<char*>(key->rax), Nnprimes*sizeof(uint64_t));
+	fin.read(reinterpret_cast<char*>(key->rbx), Nnprimes*sizeof(uint64_t));
 	fin.close();
-	return &key;
+	return key;
 }
 
 }  // namespace heaan

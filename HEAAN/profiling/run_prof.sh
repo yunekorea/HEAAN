@@ -7,6 +7,8 @@ mkdir ${savedir}
 
 # Start profiling tools
 sar -u 1 -o ${savedir}/sar_cpu_${oper}.file > /dev/null 2>&1 &
+sar -r 1 -p ${savedir}/sar_memory_${oper}.file > /dev/null 2>&1 &
+sar -b 1 -o ${savedir}/sar_io_${oper}.file > /dev/null 2>&1 &
 sar -d --dev=nvme0n1 1 -o ${savedir}/sar_disk_${oper}.file > /dev/null 2>&1 &
 sudo blktrace -d /dev/nvme0n1 -o ${savedir}/blktrace_${oper} &
 

@@ -7,9 +7,10 @@ mkdir ${savedir}
 
 # Start profiling tools
 sar -u 1 -o ${savedir}/sar_cpu_${oper}.file > /dev/null 2>&1 &
-sar -r 1 -p ${savedir}/sar_memory_${oper}.file > /dev/null 2>&1 &
+sar -r 1 -o ${savedir}/sar_memory_${oper}.file > /dev/null 2>&1 &
 sar -b 1 -o ${savedir}/sar_io_${oper}.file > /dev/null 2>&1 &
-sar -d --dev=nvme0n1 1 -o ${savedir}/sar_disk_${oper}.file > /dev/null 2>&1 &
+sar -d 1 --dev=nvme0n1 -o ${savedir}/sar_disk_${oper}.file > /dev/null 2>&1 &
+sar -B 1 -o ${savedir}/sar_paging_${oper}.file > /dev/null 2>&1 &
 sudo blktrace -d /dev/nvme0n1 -o ${savedir}/blktrace_${oper} &
 
 # Run profheaan
@@ -19,9 +20,11 @@ sudo blktrace -d /dev/nvme0n1 -o ${savedir}/blktrace_${oper} &
 sudo killall blktrace
 killall sar
 
+sleep 5
+
 # Process data
 #blkparse -i blktrace_${oper} -o blktrace_${oper}.parsed
-iowatcher -t ${savedir}/blktrace_${oper} -o ${savedir}/iowatcher_${oper}.svg
+iowatcher -t $PWD/${savedir}/blktrace_${oper} -o $PWD/${savedir}/iowatcher_${oper}.svg
 
-echo "Profiling complete. Check output.png and sar logs."
+echo "Profiling complete. Check output.svg and sar logs."
 

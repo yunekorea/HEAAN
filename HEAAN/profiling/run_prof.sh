@@ -26,5 +26,13 @@ sleep 5
 #blkparse -i blktrace_${oper} -o blktrace_${oper}.parsed
 iowatcher -t $PWD/${savedir}/blktrace_${oper} -o $PWD/${savedir}/iowatcher_${oper}.svg
 
+sleep 5
+
+sar -u -f ${savedir}/sar_cpu_${oper}.file > ${savedir}/sar_cpu_${oper}.out
+sar -r -f ${savedir}/sar_memory_${oper}.file > ${savedir}/sar_memory_${oper}.out
+sar -b -f ${savedir}/sar_io_${oper}.file > ${savedir}/sar_io_${oper}.out
+sar -d --dev=nvme0n1 -f ${savedir}/sar_disk_${oper}.file > ${savedir}/sar_disk_${oper}.out
+sar -B -f ${savedir}/sar_paging_${oper}.file > ${savedir}/sar_paging_${oper}.out 
+
 echo "Profiling complete. Check output.svg and sar logs."
 

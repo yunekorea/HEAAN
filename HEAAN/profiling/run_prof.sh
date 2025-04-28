@@ -17,7 +17,8 @@ sar -B 1 -o ${savedir}/sar_paging_${oper}.file > /dev/null 2>&1 &
 sudo blktrace -d /dev/nvme0n1 -o ${dir}/blktrace_${oper} &
 
 # Run profiling
-./ProfilingHEAAN ${oper}
+echo $$ | sudo tee /sys/fs/cgroup/testlimit/cgroup.procs
+sudo perf record --call-graph dwarf -g ./ProfilingHEAAN ${oper}
 
 # Stop profiling tools
 sudo killall blktrace

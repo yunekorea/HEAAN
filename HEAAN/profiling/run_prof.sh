@@ -60,6 +60,15 @@ else
   echo "No memory limit will be applied."
 fi
 
+# Create a swap file & disable the existing one
+if [[ -n "$MEM_LIMIT" ]]; then
+  sudo fallocate -l 128G /mnt/ssd/swapfile
+  sudo chmod 600 /mnt/ssd/swapfile
+  sudo mkswap /mnt/ssd/swapfile
+  sudo swapon /mnt/ssd/swapfile -p 200
+  sudo swapoff /swap.img
+fi
+
 #make directory for profiled data
 dir=prof_data_$oper
 mkdir ${dir}
@@ -77,22 +86,19 @@ sudo blktrace -d /dev/nvme0n1 -o ${dir}/blktrace_${oper} &
 # Run profiling
 
 if [[ -n "$MEM_LIMIT" ]]; then
-  # Create swap file & cgroup for memory limitation
-  sudo fallocate -l 128G /mnt/ssd/swapfile
-  sudo chmod 600 /mnt/ssd/swapfile
-  sudo mkswap /mnt/ssd/swapfile
-  sudo swapon /mnt/ssd/swapfile -p 200
-  sudo cgcreate -g memory:testlimit
-  echo ${MEM_LIMIT} | sudo tee /sys/fs/cgroup/testlimit/memory.max
+  # Cgroup for memory limitation
+  #sudo cgcreate -g memory:testlimit
+  #echo ${MEM_LIMIT} | sudo tee /sys/fs/cgroup/testlimit/memory.max
 
-  sudo perf record --call-graph dwarf -g -- ./ProfilingHEAAN ${oper} &
-  HEAAN_PID=$!
-  echo ${HEAAN_PID} | sudo tee /sys/fs/cgroup/testlimit/cgroup.procs
-  wait ${HEAAN_PID}
-  # Remove swap file & cgroup
-  sudo swapoff /mnt/ssd/swapfile
-  sudo rm /mnt/ssd/swapfile
-  sudo cgdelete -g memory:testlimit
+  #sudo perf record --call-graph dwarf -g -- ./ProfilingHEAAN ${oper} &
+  #HEAAN_PID=$!
+  #echo ${HEAAN_PID} | sudo tee /sys/fs/cgroup/testlimit/cgroup.procs
+  #wait ${HEAAN_PID}
+  # Remove cgroup
+  #sudo cgdelete -g memory:testlimit
+  sudo systemd-run --scope -p MemoryMax=1G perf record --call-graph dwarf -g ./ProfilingHEAAN ${oper} #&
+  #HEAAN_PID=$!
+  #wait ${HEAAN_PID}
 else
   sudo perf record --call-graph dwarf -g ./ProfilingHEAAN ${oper}
 fi
@@ -105,17 +111,6 @@ sleep 5
 
 # Process data
 
-mv perf.data ${savedir}/
-iowatcher -t ${savedir}/blktrace_${oper} -o ${savedir}/iowatcher_${oper}.svg
-sleep 5
-blkparse -i ${savedir}/blktrace_${oper} -d ${savedir}/blkparse_${oper}_dump.bin
-
-cd ${savedir}
-btt -i ${savedir}/blkparse_${oper}_dump.bin -o ${savedir}/btt_${oper}
-sudo perf script | ~/FlameGraph/stackcollapse-perf.pl | ~/FlameGraph/flamegraph.pl > FlameGraph_${oper}.svg
-sudo rm -f perf.data
-cd ../
-
 # make output text file from sar binary output
 sar -u -f ${savedir}/sar_cpu_${oper}.file > ${savedir}/sar_cpu_${oper}.out
 sar -r -f ${savedir}/sar_memory_${oper}.file > ${savedir}/sar_memory_${oper}.out
@@ -123,5 +118,26 @@ sar -b -f ${savedir}/sar_io_${oper}.file > ${savedir}/sar_io_${oper}.out
 sar -d --dev=nvme0n1 -f ${savedir}/sar_disk_${oper}.file > ${savedir}/sar_disk_${oper}.out
 sar -B -f ${savedir}/sar_paging_${oper}.file > ${savedir}/sar_paging_${oper}.out 
 
+sleep 5
+
+mv perf.data ${savedir}/
+iowatcher -t ${savedir}/blktrace_${oper} -o ${savedir}/iowatcher_${oper}.svg
+sleep 5
+#blkparse -i ${savedir}/blktrace_${oper} -d ${savedir}/blkparse_${oper}_dump.bin
+
+cd ${savedir}
+#btt -i ${savedir}/blkparse_${oper}_dump.bin -o ${savedir}/btt_${oper}
+btt -i ${savedir}/blktrace_${oper}.dump -o ${savedir}/btt_${oper}
+sudo perf script | ~/FlameGraph/stackcollapse-perf.pl | ~/FlameGraph/flamegraph.pl > FlameGraph_${oper}.svg
+sudo rm -f perf.data
+cd ../
+
+
+# Remove the created swap file & re-enable the existing one
+if [[ -n "$MEM_LIMIT" ]]; then
+  sudo swapon /swap.img
+  sudo swapoff /mnt/ssd/swapfile
+  sudo rm /mnt/ssd/swapfile
+fi
 echo "Profiling complete. Check output.svg and sar logs."
 

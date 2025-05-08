@@ -86,19 +86,7 @@ sudo blktrace -d /dev/nvme0n1 -o ${dir}/blktrace_${oper} &
 # Run profiling
 
 if [[ -n "$MEM_LIMIT" ]]; then
-  # Cgroup for memory limitation
-  #sudo cgcreate -g memory:testlimit
-  #echo ${MEM_LIMIT} | sudo tee /sys/fs/cgroup/testlimit/memory.max
-
-  #sudo perf record --call-graph dwarf -g -- ./ProfilingHEAAN ${oper} &
-  #HEAAN_PID=$!
-  #echo ${HEAAN_PID} | sudo tee /sys/fs/cgroup/testlimit/cgroup.procs
-  #wait ${HEAAN_PID}
-  # Remove cgroup
-  #sudo cgdelete -g memory:testlimit
   sudo systemd-run --scope -p MemoryMax=1G perf record --call-graph dwarf -g ./ProfilingHEAAN ${oper} #&
-  #HEAAN_PID=$!
-  #wait ${HEAAN_PID}
 else
   sudo perf record --call-graph dwarf -g ./ProfilingHEAAN ${oper}
 fi
@@ -123,10 +111,8 @@ sleep 5
 mv perf.data ${savedir}/
 iowatcher -t ${savedir}/blktrace_${oper} -o ${savedir}/iowatcher_${oper}.svg
 sleep 5
-#blkparse -i ${savedir}/blktrace_${oper} -d ${savedir}/blkparse_${oper}_dump.bin
 
 cd ${savedir}
-#btt -i ${savedir}/blkparse_${oper}_dump.bin -o ${savedir}/btt_${oper}
 btt -i ${savedir}/blktrace_${oper}.dump -o ${savedir}/btt_${oper}
 sudo perf script | ~/FlameGraph/stackcollapse-perf.pl | ~/FlameGraph/flamegraph.pl > FlameGraph_${oper}.svg
 sudo rm -f perf.data
@@ -139,5 +125,5 @@ if [[ -n "$MEM_LIMIT" ]]; then
   sudo swapoff /mnt/ssd/swapfile
   sudo rm /mnt/ssd/swapfile
 fi
-echo "Profiling complete. Check output.svg and sar logs."
+echo "Profiling complete."
 

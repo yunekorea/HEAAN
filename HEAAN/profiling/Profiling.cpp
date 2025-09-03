@@ -21,8 +21,11 @@ int main(int argc, char **argv) {
   long slots = n;
   long numThread = 8;
   
-  int iter = 214600;
+  //int iter = 214600;
+  int iter = 1024;
+  std::string oper = string(argv[1]);
   cout << "iterator setup done" << endl;
+  cout << "Selected Operation : " << oper << endl;
   // Construct and Generate Public Keys //
   srand(time(NULL));
   //SetNumThreads(numThread);
@@ -40,134 +43,110 @@ int main(int argc, char **argv) {
   
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
+  std::string WorkingDir = "/mnt/ssd";
   
   // Encrypt to ciphertexts //
-  if(string(argv[1]) == "enc") {
+  if(oper == "enc") {
   Ciphertext cipher0[iter];
   Ciphertext cipher1[iter];
   complex<double>* mvec0[iter];
   complex<double>* mvec1[iter];
-  cout << "ciphersetup DONE" << endl;
   for(int i = 0; i < iter; i++) {
-    cout << "loading double : " << i << " : "; 
+    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
     mvec0[i] = loadDouble("randint_1024_0.txt");
     mvec1[i] = loadDouble("randint_1024_1.txt");
-    cout << "DONE" << endl;
 
-    cout << "Encrypting : " << i << " : ";
     scheme.encrypt(cipher0[i], mvec0[i], n, logp, logq);
     scheme.encrypt(cipher1[i], mvec1[i], n, logp, logq);
-    cout << "DONE" << endl;
 
-    cout << "saving ciphertext : " << i << " : ";
-    SerializationUtils::writeCiphertext(cipher0[i], "./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    SerializationUtils::writeCiphertext(cipher1[i], "./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
-    cout << "DONE" << endl;
-  }
+    SerializationUtils::writeCiphertext(cipher0[i], WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipher1[i], WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    }
+    cout << endl;
   }
 
   // Load/add ciphertexts //
-  if(string(argv[1]) == "cipadd"){
+  if(oper == "cipadd"){
   Ciphertext* cipher2[iter];
   Ciphertext* cipher3[iter];
   Ciphertext cipherAdd[iter];
   complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
-    cout << "Reading ciphertext : " << i << " : ";
-    cipher2[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher3[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
-    cout << "DONE" << endl;
+    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
+    cipher2[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher3[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
-    cout << "Ciphertext add : " << i << " : ";
     scheme.add(cipherAdd[i], *cipher2[i], *cipher3[i]);
-    cout << "DONE" << endl;
 
-    cout << "Decrypt : " << i << " : ";
     dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
-    cout << "DONE" << endl;
-
-  }
+    }
+    cout << endl;
   }
   
   // multiply ciphertexts //
-  if(string(argv[1]) == "cipmult") {
+  if(oper == "cipmult") {
   Ciphertext* cipher4[iter];
   Ciphertext* cipher5[iter];
   Ciphertext cipherMult[iter];
   complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
-    cout << "Reading ciphertext : " << i << " : ";
-    cipher4[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher5[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
-    cout << "DONE" << endl;
+    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
+    cipher4[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher5[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
-    cout << "Ciphertext mult : " << i << " : ";
     scheme.mult(cipherMult[i], *cipher4[i], *cipher5[i]);
-    cout << "DONE" << endl;
 
-    cout << "Decrypt : " << i << " : ";
     dvecmult[i] = scheme.decrypt(secretKey, cipherMult[i]);
-    cout << "DONE" << endl;
-
   }
+  cout << endl;
   }
 
   // Add decrypted //
-  if(string(argv[1]) == "decadd") {
+  if(oper == "decadd") {
   Ciphertext* cipher6[iter];
   Ciphertext* cipher7[iter];
   complex<double>* dvec0[iter];
   complex<double>* dvec1[iter];
   complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
-    cout << "Reading ciphertext : " << i << " : ";
-    cipher6[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher7[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
-    cout << "DONE" << endl;
+    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
+    cipher6[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher7[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
-    cout << "Ciphertext decrypt : " << i << " : ";
     dvec0[i] = scheme.decrypt(secretKey, *cipher6[i]);
     dvec1[i] = scheme.decrypt(secretKey, *cipher7[i]);
-    cout << "DONE" << endl;
 
-    cout << "Decrypted add : " << i << " : ";
     complex<double>* dvectemp = new complex<double>[1024];
     for(int j = 0; j < 1024; j++) {
       dvectemp[j] = dvec0[i][j] + dvec1[i][j];
       dvecadd[i] = dvectemp;
     }
-    cout << "DONE" << endl;
-
   }
-  }
+    cout << endl;
+    }
   
   // Multiply decrypted //
-  if(string(argv[1]) == "decmult") {
+  if(oper == "decmult") {
   Ciphertext* cipher8[iter];
   Ciphertext* cipher9[iter];
   complex<double>* dvec2[iter];
   complex<double>* dvec3[iter];
   complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
-    cout << "Reading ciphertext : " << i << " : ";
-    cipher8[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
-    cipher9[i] = SerializationUtils::readCiphertext("./1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
-    cout << "DONE" << endl;
+    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
+    cipher8[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    cipher9[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
-    cout << "Ciphertext decrypt : " << i << " : ";
     dvec2[i] = scheme.decrypt(secretKey, *cipher8[i]);
     dvec3[i] = scheme.decrypt(secretKey, *cipher9[i]);
-    cout << "DONE" << endl;
 
-    cout << "Decrypted mult : " << i << " : ";
     complex<double>* dvectemp = new complex<double>[1024];
     for(int j = 0; j < 1024; j++) {
       dvectemp[j] = dvec2[i][j] * dvec3[i][j];
       dvecmult[i] = dvectemp;
     }
-    cout << "DONE" << endl;
-
-  }
+    }
+    cout << endl;
   }
 
   /*

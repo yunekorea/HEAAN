@@ -18,7 +18,12 @@
 extern "C" {
 #endif
 
-
+void* create_Ciphertext(void);
+void* create_Ring(void);
+void* create_SecretKey(void* ring);
+void* create_Scheme(void* secretKey, void* ring);
+void addLeftRotKeys(void* scheme, void *secretKey);
+void addRightRotKeys(void* scheme, void *secretKey);
 
 #ifdef __cplusplus
 }

@@ -13,3 +13,5 @@ HEAAN/lib/*.a
 *.o
 
 *.json
+
+tags

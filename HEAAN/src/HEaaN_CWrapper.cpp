@@ -44,6 +44,7 @@ int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void
   Ciphertext* cipher1 = static_cast<Ciphertext*>(cipher1_ptr); 
   Ciphertext* cipher2 = static_cast<Ciphertext*>(cipher2_ptr); 
   scheme->add(*cipherAdd, *cipher1, *cipher2);
+  return 0;
 }
 
 }

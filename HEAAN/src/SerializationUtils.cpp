@@ -82,11 +82,9 @@ Key* SerializationUtils::readKey(string path) {
 	return key;
 }
 
-static void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
+void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
 	fstream fout;
 	fout.open(path, ios::binary|ios::out);
-	long n = cipher.n;
-	long logp = cipher.logp;
 	long logq = logQQ;
 
 	long np = ceil(((double)logq + 1)/8);

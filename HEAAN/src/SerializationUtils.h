@@ -26,7 +26,7 @@ public:
 
 	static void writeKey(Key* key, std::string path);
 	static Key* readKey(std::string path);
-	static void writeSecretKey(SecretKey& secretKey, string path);
+	static void writeSecretKey(SecretKey& secretKey, std::string path);
 };
 
 }  // namespace heaan

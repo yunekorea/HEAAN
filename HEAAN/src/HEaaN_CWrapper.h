@@ -21,10 +21,10 @@ extern "C" {
 
 void* create_Ciphertext(void);
 void* create_Ring(void);
-void* create_SecretKey(void* ring);
-void* create_Scheme(void* secretKey, void* ring);
-void addLeftRotKeys(void* scheme, void *secretKey);
-void addRightRotKeys(void* scheme, void *secretKey);
+void* create_SecretKey(void* ring_ptr);
+void* create_Scheme(void* secretKey_ptr, void* ring_ptr);
+void addLeftRotKeys(void* scheme_ptr, void *secretKey_ptr);
+void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr);
 
 #ifdef __cplusplus
 }

@@ -82,4 +82,24 @@ Key* SerializationUtils::readKey(string path) {
 	return key;
 }
 
+static void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
+	fstream fout;
+	fout.open(path, ios::binary|ios::out);
+	long n = cipher.n;
+	long logp = cipher.logp;
+	long logq = logQQ;
+
+	long np = ceil(((double)logq + 1)/8);
+	ZZ q = conv<ZZ>(1) << logq;
+	unsigned char* bytes = new unsigned char[np];
+	for (long i = 0; i < N; ++i) {
+		secretKey.sx[i] %= q;
+		BytesFromZZ(bytes, secretKey.sx[i], np);
+		fout.write(reinterpret_cast<char*>(bytes), np);
+	}
+	fout.close();
+}
+
+
+
 }  // namespace heaan

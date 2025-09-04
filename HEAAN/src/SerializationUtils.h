@@ -12,6 +12,7 @@
 #include <string>
 
 #include "Ciphertext.h"
+#include "SecretKey.h"
 #include "Params.h"
 #include "Key.h"
 
@@ -25,6 +26,7 @@ public:
 
 	static void writeKey(Key* key, std::string path);
 	static Key* readKey(std::string path);
+	static void writeSecretKey(SecretKey& secretKey, string path);
 };
 
 }  // namespace heaan

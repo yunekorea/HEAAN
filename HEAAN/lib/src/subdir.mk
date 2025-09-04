@@ -17,7 +17,8 @@ CPP_SRCS += \
 ../src/SerializationUtils.cpp \
 ../src/StringUtils.cpp \
 ../src/TestScheme.cpp \
-../src/TimeUtils.cpp 
+../src/TimeUtils.cpp \
+../src/HEaaN_CWrapper.cpp
 
 OBJS += \
 ./src/BootContext.o \
@@ -33,7 +34,8 @@ OBJS += \
 ./src/SerializationUtils.o \
 ./src/StringUtils.o \
 ./src/TestScheme.o \
-./src/TimeUtils.o 
+./src/TimeUtils.o \
+./src/HEaaN_CWrapper.o
 
 CPP_DEPS += \
 ./src/BootContext.d \
@@ -49,7 +51,8 @@ CPP_DEPS += \
 ./src/SerializationUtils.d \
 ./src/StringUtils.d \
 ./src/TestScheme.d \
-./src/TimeUtils.d 
+./src/TimeUtils.d \
+./src/HEaaN_CWrapper.d
 
 
 # Each subdirectory must supply rules for building sources it contributes

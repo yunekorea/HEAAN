@@ -38,6 +38,15 @@ void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr) {
   scheme->addRightRotKeys(*secretKey);
 }
 
+int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void* cipher2_ptr) {
+  Scheme* scheme = static_cast<Scheme*>(scheme_ptr);
+  Ciphertext* cipherAdd = static_cast<Ciphertext*>(cipherAdd_ptr); 
+  Ciphertext* cipher1 = static_cast<Ciphertext*>(cipher1_ptr); 
+  Ciphertext* cipher2 = static_cast<Ciphertext*>(cipher2_ptr); 
+  scheme->add(*cipherAdd, *cipher1, *cipher2);
+  return 0;
+}
+
 void* readCiphertextFromMem(void* buffer, size_t len) {
   long n, logp, logq; 
   

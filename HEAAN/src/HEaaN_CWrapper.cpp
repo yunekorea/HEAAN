@@ -38,4 +38,31 @@ void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr) {
   scheme->addRightRotKeys(*secretKey);
 }
 
+void* readCiphertextFromMem(void* buffer, size_t len) {
+  long n, logp, logq; 
+  
+  std::string dataBuffer(static_cast<char*>(buffer), len);
+  std::stringstream dataStream(dataBuffer);
+
+  dataStream.read(reinterpret_cast<char*>(&n), sizeof(long));
+  dataStream.read(reinterpret_cast<char*>(&logp), sizeof(long));
+  dataStream.read(reinterpret_cast<char*>(&logq), sizeof(long));
+
+  long np = ceil(((double)logq + 1)/8);
+  unsigned char* bytes = new unsigned char[np];
+  Ciphertext* cipher = new Ciphertext(logp, logq, n);
+  for(long i = 0; i < N; ++i) {
+    dataStream.read(reinterpret_cast<char*>(bytes), np);
+    ZZFromBytes(cipher->ax[i], bytes, np);
+  }
+  for(long i = 0; i < N; ++i) {
+    dataStream.read(reinterpret_cast<char*>(bytes), np);
+    ZZFromBytes(cipher->bx[i], bytes, np);
+  }
+
+  delete[] bytes;
+
+  return cipher;
+}
+
 }

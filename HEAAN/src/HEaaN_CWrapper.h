@@ -1,17 +1,4 @@
-#include "BootContext.h"
-#include "Ring.h"
-#include "RingMultiplier.h"
-#include "Ciphertext.h"
-#include "EvaluatorUtils.h"
-#include "Scheme.h"
-#include "SchemeAlgo.h"
-#include "SecretKey.h"
-#include "StringUtils.h"
-#include "TimeUtils.h"
-#include "SerializationUtils.h"
-#include "TestScheme.h"
-#include "Params.h"
-#include <sstream>
+#include <stddef.h>
 
 #ifndef HEAAN_CWRAPPER_H
 #define HEAAN_CWRAPPER_H

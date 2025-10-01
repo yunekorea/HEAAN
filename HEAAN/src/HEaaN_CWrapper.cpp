@@ -1,4 +1,6 @@
 #include "HEaaN_CWrapper.h"
+#include "HEAAN.h"
+#include <sstream>
 
 using namespace std;
 using namespace NTL;

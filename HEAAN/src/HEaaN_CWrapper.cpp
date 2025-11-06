@@ -1,12 +1,41 @@
 #include "HEaaN_CWrapper.h"
 #include "HEAAN.h"
 #include <sstream>
+#include <stdlib.h>
 
 using namespace std;
 using namespace NTL;
 using namespace heaan;
 
 extern "C" {
+
+//Global pointer for HEaaN to work with SPDK
+static heaan_ndp_context* heaan_context = NULL;
+
+int heaan_Initialize(
+                int logq, int logp, int logn,
+                int numThread, int iter) {
+  if(heaan_context == NULL)
+    heaan_context = (heaan_ndp_context*)malloc(sizeof(heaan_context));
+  heaan_context->logq = (long)logq;
+  heaan_context->logp = (long)logp;
+  heaan_context->logn = (long)logn;
+  heaan_context->n = 1 << (long)logn;
+  heaan_context->slots = heaan_context->n;
+  heaan_context->numThread = (long)numThread;
+  heaan_context->iter = iter;
+  heaan_context->ring = create_Ring();
+  heaan_context->secretKey = create_SecretKey(heaan_context->ring); 
+  heaan_context->scheme = create_Scheme(heaan_context->secretKey, heaan_context->ring);
+  addLeftRotKeys(heaan_context->scheme, heaan_context->secretKey);
+  addRightRotKeys(heaan_context->scheme, heaan_context->secretKey);
+
+  return 0;
+}
+
+heaan_ndp_context* heaan_Get_Context(void) {
+  return heaan_context;
+}
 
 void* create_Ciphertext(void) {
   return new Ciphertext();

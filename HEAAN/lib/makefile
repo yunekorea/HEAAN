@@ -4,6 +4,12 @@
 
 -include ../makefile.init
 
+# ADD THIS SECTION TO INJECT COMPILER FLAGS
+# CXXFLAGS is the standard variable for C++ compilation flags
+CXXFLAGS += -fPIC -Wall
+# You might also need to ensure C source files get the flag if your wrapper is C
+CFLAGS += -fPIC
+
 RM := rm -rf
 
 # All of the sources participating in the build are defined here

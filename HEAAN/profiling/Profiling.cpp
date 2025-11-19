@@ -12,6 +12,10 @@ int main(int argc, char **argv) {
   * Basic Parameters are in src/Params.h
   * If you want to use another parameter, you need to change src/Params.h file and re-complie this library.
   */
+  
+  std::string SFileName0 = "randint_cipher_1024_0_";
+  std::string SFileName1 = "randint_cipher_1024_1_";
+  std::string WorkingDir = "/mnt/ssd";
 
   // Parameters //
   long logq = 300; ///< Ciphertext modulus (this value should be <= logQ in "scr/Params.h")
@@ -31,19 +35,23 @@ int main(int argc, char **argv) {
   SetNumThreads(numThread);
   TimeUtils timeutils;
   Ring ring;
-  SecretKey secretKey(ring);
+  SecretKey* secretKeyPointer = NULL;
+  if(oper == "enc") {
+    secretKeyPointer = new SecretKey(ring);
+    SerializationUtils::writeSecretKey(*secretKeyPointer, WorkingDir + "HEaaN_SecretKey/secretKey.sk");
+  }
+  else {
+    secretKeyPointer = SerializationUtils::readSecretKey(ring, WorkingDir + "HeaaN_SecretKey/secretKey.sk");
+  }
+  SecretKey secretKey = *secretKeyPointer; 
+  free(secretKeyPointer);
   Scheme scheme(secretKey, ring);
   scheme.addLeftRotKeys(secretKey); ///< When you need left rotation for the vectorized message
   scheme.addRightRotKeys(secretKey); ///< When you need right rotation for the vectorized message
-  
+
   // Make Random Array of Complex //
   //complex<double>* mvec0 = EvaluatorUtils::randomComplexArray(slots);
   //complex<double>* mvec1 = EvaluatorUtils::randomComplexArray(slots);
-
-  
-  std::string SFileName0 = "randint_cipher_1024_0_";
-  std::string SFileName1 = "randint_cipher_1024_1_";
-  std::string WorkingDir = "/mnt/ssd";
   
   // Encrypt to ciphertexts //
   if(oper == "enc") {

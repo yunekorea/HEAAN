@@ -98,7 +98,7 @@ void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
 	fout.close();
 }
 
-SecretKey* SerializationUtils::readSecretKey(string path, Ring& ring) {
+SecretKey* SerializationUtils::readSecretKey(Ring& ring, string path) {
 	long n, logp, logq;
 	fstream fin;
 	fin.open(path, ios::binary|ios::in);

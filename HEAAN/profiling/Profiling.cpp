@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
   
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
-  std::string WorkingDir = "/mnt/ssd";
+  std::string WorkingDir = "/mnt/nvmf";
 
   // Parameters //
   long logq = 300; ///< Ciphertext modulus (this value should be <= logQ in "scr/Params.h")

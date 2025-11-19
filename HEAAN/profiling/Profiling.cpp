@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   cout << "Selected Operation : " << oper << endl;
   // Construct and Generate Public Keys //
   srand(time(NULL));
-  //SetNumThreads(numThread);
+  SetNumThreads(numThread);
   TimeUtils timeutils;
   Ring ring;
   SecretKey secretKey(ring);

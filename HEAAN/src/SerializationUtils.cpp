@@ -98,6 +98,22 @@ void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
 	fout.close();
 }
 
+SecretKey* SerializationUtils::readSecretKey(string path, Ring& ring) {
+	long n, logp, logq;
+	fstream fin;
+	fin.open(path, ios::binary|ios::in);
+  
+	long np = ceil(((double)logq + 1)/8);
+	unsigned char* bytes = new unsigned char[np];
+	SecretKey* secret = new SecretKey(ring);
+	for (long i = 0; i < N; ++i) {
+		fin.read(reinterpret_cast<char*>(bytes), np);
+		ZZFromBytes(secret->sx[i], bytes, np);
+	}
+	fin.close();
+
+	return secret;
+}
 
 
 }  // namespace heaan

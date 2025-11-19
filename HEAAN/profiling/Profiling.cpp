@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
   
   std::string SFileName0 = "randint_cipher_1024_0_";
   std::string SFileName1 = "randint_cipher_1024_1_";
+  std::string SFileNameAdd = "randint_cipher_1024_Add_";
   std::string WorkingDir = "/mnt/nvmf";
 
   // Parameters //
@@ -78,15 +79,16 @@ int main(int argc, char **argv) {
   Ciphertext* cipher2[iter];
   Ciphertext* cipher3[iter];
   Ciphertext cipherAdd[iter];
-  complex<double>* dvecadd[iter];
+  //complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Progress : " << i << "/" << iter-1 << "\r"; 
     cipher2[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
     cipher3[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
     scheme.add(cipherAdd[i], *cipher2[i], *cipher3[i]);
+    SerializationUtils::writeCiphertext(cipherAdd[i], WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
 
-    dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
+    //dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
     }
     cout << endl;
   }
@@ -96,15 +98,16 @@ int main(int argc, char **argv) {
   Ciphertext* cipher4[iter];
   Ciphertext* cipher5[iter];
   Ciphertext cipherMult[iter];
-  complex<double>* dvecmult[iter];
+  //complex<double>* dvecmult[iter];
   for(int i = 0; i < iter; i++) { 
     cout << "Progress : " << i << "/" << iter-1 << "\r"; 
     cipher4[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
     cipher5[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
     scheme.mult(cipherMult[i], *cipher4[i], *cipher5[i]);
+    SerializationUtils::writeCiphertext(cipherMult[i], WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
 
-    dvecmult[i] = scheme.decrypt(secretKey, cipherMult[i]);
+    //dvecmult[i] = scheme.decrypt(secretKey, cipherMult[i]);
   }
   cout << endl;
   }

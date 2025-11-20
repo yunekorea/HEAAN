@@ -39,10 +39,10 @@ int main(int argc, char **argv) {
   SecretKey* secretKeyPointer = NULL;
   if(oper == "enc") {
     secretKeyPointer = new SecretKey(ring);
-    SerializationUtils::writeSecretKey(*secretKeyPointer, WorkingDir + "HEaaN_SecretKey/secretKey.sk");
+    SerializationUtils::writeSecretKey(*secretKeyPointer, WorkingDir + "/HEaaN_SecretKey/secretKey.sk");
   }
   else {
-    secretKeyPointer = SerializationUtils::readSecretKey(ring, WorkingDir + "HeaaN_SecretKey/secretKey.sk");
+    secretKeyPointer = SerializationUtils::readSecretKey(ring, WorkingDir + "/HEaaN_SecretKey/secretKey.sk");
   }
   SecretKey secretKey = *secretKeyPointer; 
   free(secretKeyPointer);

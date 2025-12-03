@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     cipher3[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
 
     scheme.add(cipherAdd[i], *cipher2[i], *cipher3[i]);
-    SerializationUtils::writeCiphertext(cipherAdd[i], WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
+    SerializationUtils::writeCiphertext(cipherAdd[i], WorkingDir + "/1GB_ciphertexts/" + SFileNameAdd + std::to_string(i) + ".cip");
 
     //dvecadd[i] = scheme.decrypt(secretKey, cipherAdd[i]);
     }

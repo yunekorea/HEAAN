@@ -41,7 +41,7 @@ void* create_Ciphertext(void) {
   return new Ciphertext();
 }
 
-void* free_Ciphertext(void* cipher_ptr) {
+void free_Ciphertext(void* cipher_ptr) {
   Ciphertext* ciphertext = static_cast<Ciphertext*>(cipher_ptr); 
   delete ciphertext;
 }

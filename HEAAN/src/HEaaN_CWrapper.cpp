@@ -87,6 +87,7 @@ void* readCiphertextFromPath(char* path) {
   std::string pathString(path);
   cout << "ReadCiphertextFromPath\npathString: " << pathString << endl;
   Ciphertext* readCipher = SerializationUtils::readCiphertext(pathString);
+  cout << "ReadCiphertextFromPath\nDONE" << pathString << endl;
   return readCipher;
 }
 
@@ -96,6 +97,7 @@ int writeCiphertextToPath(void* cipher_ptr, char* path) {
   std::string pathString(path);
   cout << "WriteCiphertextToPath\npathString: " << pathString << endl;
   SerializationUtils::writeCiphertext(*cipher, pathString);
+  cout << "WriteCiphertextToPath\nDONE" << pathString << endl;
   return 0;
 }
 

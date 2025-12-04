@@ -3,23 +3,31 @@
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++11 -p -Wall -O2 -I../src -pthread #-g
-LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread
+HEAAN_LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread
+NDP_LDFLAGS = -L/usr/local/lib ../lib/libHEAAN.a -lntl -lgmp -lm -pthread -lnvme
 
 # Source and object files
-SRCS = Profiling.cpp FileSave.cpp 
-#FileLoad.cpp
-OBJS = $(SRCS:.cpp=.o)
+HEAAN_SRCS = Profiling.cpp FileSave.cpp
+NDP_SRCS = ProfilingNDP.cpp FileSave.cpp
 
+#FileLoad.cpp
+HEAAN_OBJS = $(HEAAN_SRCS:.cpp=.o)
+NDP_OBJS = $(NDP_SRCS:.cpp=.o)
 # Target executable name
-TARGET = ProfilingHEAAN
+TARGETS = ProfilingHEAAN ProfilingNDP
 
 # Default rule
-all: clean $(TARGET)
+all: clean $(TARGETS)
 
 # Linking step
-$(TARGET): $(OBJS)
+ProfilingHEAAN: $(HEAAN_OBJS)
 	@echo 'Building target: $@'
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(HEAAN_LDFLAGS)
+	@echo 'Finished building target: $@'
+
+ProfilingNDP: $(NDP_OBJS)
+	@echo 'Building target: $@'
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(NDP_LDFLAGS)
 	@echo 'Finished building target: $@'
 
 # Compile individual source files
@@ -28,5 +36,5 @@ $(TARGET): $(OBJS)
 
 # Clean up generated files
 clean:
-	rm -rf $(OBJS) $(TARGET)
+	rm -rf $(HEAAN_OBJS) $(NDP_OBJS) $(TARGETS)
 

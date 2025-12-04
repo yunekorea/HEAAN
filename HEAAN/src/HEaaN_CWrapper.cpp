@@ -43,7 +43,7 @@ void* create_Ciphertext(void) {
 
 void* free_Ciphertext(void* cipher_ptr) {
   Ciphertext* ciphertext = static_cast<Ciphertext*>(cipher_ptr); 
-  delete *ciphertext;
+  delete ciphertext;
 }
 
 void* create_Ring(void) {

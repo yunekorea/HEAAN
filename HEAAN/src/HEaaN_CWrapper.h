@@ -37,7 +37,7 @@ HEAAN_C_API void* create_Scheme(void* secretKey_ptr, void* ring_ptr);
 HEAAN_C_API void addLeftRotKeys(void* scheme_ptr, void *secretKey_ptr);
 HEAAN_C_API void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr);
 HEAAN_C_API int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void* cipher2_ptr);
-HEAAN_C_API void* readCiphertexFromPath(char* path);
+HEAAN_C_API void* readCiphertextFromPath(char* path);
 HEAAN_C_API void* readCiphertextFromMem(void* buffer, size_t len);
 
 

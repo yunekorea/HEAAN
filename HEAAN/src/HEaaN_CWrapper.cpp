@@ -78,7 +78,7 @@ int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void
   return 0;
 }
 
-void* readCiphertexFromPath(char* path) {
+void* readCiphertextFromPath(char* path) {
   Ciphertext* readCipher = SerializationUtils::readCiphertext(path);
   return readCipher;
 }

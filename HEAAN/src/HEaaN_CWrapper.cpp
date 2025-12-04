@@ -79,8 +79,17 @@ int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void
 }
 
 void* readCiphertextFromPath(char* path) {
-  Ciphertext* readCipher = SerializationUtils::readCiphertext(path);
+  std::string pathString(path);
+  Ciphertext* readCipher = SerializationUtils::readCiphertext(pathString);
   return readCipher;
+}
+
+
+int writeCiphertextToPath(void* cipher_ptr, char* path) {
+  Ciphertext* cipherAdd = static_cast<Ciphertext*>(cipherAdd_ptr);
+  std::string pathString(path);
+  SerializationUtils::writeCiphertext(Ciphertext& cipher, string pathString);
+  return 0;
 }
 
 void* readCiphertextFromMem(void* buffer, size_t len) {

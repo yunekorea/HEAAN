@@ -41,6 +41,11 @@ void* create_Ciphertext(void) {
   return new Ciphertext();
 }
 
+void* free_Ciphertext(void* cipher_ptr) {
+  Ciphertext* ciphertext = static_cast<Ciphertext*>(cipher_ptr); 
+  delete *ciphertext;
+}
+
 void* create_Ring(void) {
   return new Ring();
 }
@@ -80,6 +85,7 @@ int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void
 
 void* readCiphertextFromPath(char* path) {
   std::string pathString(path);
+  cout << "ReadCiphertextFromPath\npathString: " << pathString << endl;
   Ciphertext* readCipher = SerializationUtils::readCiphertext(pathString);
   return readCipher;
 }
@@ -88,6 +94,7 @@ void* readCiphertextFromPath(char* path) {
 int writeCiphertextToPath(void* cipher_ptr, char* path) {
   Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
   std::string pathString(path);
+  cout << "WriteCiphertextToPath\npathString: " << pathString << endl;
   SerializationUtils::writeCiphertext(*cipher, pathString);
   return 0;
 }

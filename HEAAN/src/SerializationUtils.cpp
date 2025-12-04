@@ -60,6 +60,7 @@ Ciphertext* SerializationUtils::readCiphertext(string path) {
 		ZZFromBytes(cipher->bx[i], bytes, np);
 	}
 	fin.close();
+	delete *bytes;
 
 	return cipher;
 }

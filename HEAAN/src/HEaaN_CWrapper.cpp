@@ -86,9 +86,9 @@ void* readCiphertextFromPath(char* path) {
 
 
 int writeCiphertextToPath(void* cipher_ptr, char* path) {
-  Ciphertext* cipherAdd = static_cast<Ciphertext*>(cipherAdd_ptr);
+  Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
   std::string pathString(path);
-  SerializationUtils::writeCiphertext(Ciphertext& cipher, string pathString);
+  SerializationUtils::writeCiphertext(*cipher, pathString);
   return 0;
 }
 

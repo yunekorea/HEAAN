@@ -3,6 +3,10 @@
 #include <sstream>
 #include <stdlib.h>
 
+#include <fcntl.h>  // For open, O_DIRECT
+#include <unistd.h> // For read, close
+#include <stdlib.h> // For posix_align
+
 using namespace std;
 using namespace NTL;
 using namespace heaan;
@@ -85,10 +89,72 @@ int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void
 
 void* readCiphertextFromPath(char* path) {
   std::string pathString(path);
+	long n, logp, logq;
+  const size_t ALIGN = 4096;
+  
   cout << "ReadCiphertextFromPath\npathString: " << pathString << endl;
-  Ciphertext* readCipher = SerializationUtils::readCiphertext(pathString);
+	cout << "readCihpertextFromPath: BEGIN" << endl;
+	
+  cout << "readCihpertextFromPath: Sleep 60 seconds(DEBUG)" << endl;
+  sleep(60);
+  return nullptr;
+
+  int fd = open(path, O_RDONLY | O_DIRECT);
+  if(fd < 0) {
+    cout << "readCiphertextFromPath: open FAILED" << endl;
+    return nullptr;
+  }
+	cout << "readCihpertextFromPath: open" << endl;
+	
+  void* parameter_buf = nullptr;
+  if(posix_memalign(&parameter_buf, ALIGN, ALIGN) != 0) {
+    cout << "readCiphertextFromPath: parameter buffer init FAILED" << endl;
+    close(fd);
+    return nullptr;
+  }
+  if(read(fd, parameter_buf, ALIGN) < (ssize_t)(3*sizeof(long))) {
+    cout << "readCiphertextFromPath: parameter buffer read FAILED" << endl;
+    close(fd);
+    return nullptr;
+  }
+  long* parameter_ptr = reinterpret_cast<long*>(parameter_buf);
+  n = parameter_ptr[0];
+  logp = parameter_ptr[1];
+  logq = parameter_ptr[2];
+	cout << "readCihpertextFromPath: Parameter read DONE" << endl;
+  
+	long np = ceil(((double)logq + 1)/8);
+	Ciphertext* cipher = new Ciphertext(logp, logq, n);
+	cout << "readCihpertextFromPath: Ciphertext class created" << endl;
+
+  size_t ciphertext_read_size = ((np + ALIGN - 1) / ALIGN) * ALIGN; 
+  void* ciphertext_buf = nullptr;
+  if(posix_memalign(&ciphertext_buf, ALIGN, ciphertext_read_size) != 0) {
+    cout << "readCiphertextFromPath: ciphertext buffer init FAILED" << endl;
+    close(fd);
+    return nullptr;
+  }
+
+	for (long i = 0; i < N; ++i) {
+		if (read(fd, ciphertext_buf, ciphertext_read_size) < (ssize_t)np) {
+      cout << "readCiphertextFromPath: Failed to read ax[" << i << "]" << endl;
+      break;
+    }
+    ZZFromBytes(cipher->ax[i], reinterpret_cast<unsigned char*>(ciphertext_buf), np);
+	}
+	for (long i = 0; i < N; ++i) {
+		if (read(fd, ciphertext_buf, ciphertext_read_size) < (ssize_t)np) {
+      cout << "readCiphertextFromPath: Failed to read bx[" << i << "]" << endl;
+      break;
+    }
+    ZZFromBytes(cipher->bx[i], reinterpret_cast<unsigned char*>(ciphertext_buf), np);
+	}
+  close(fd);
+  free(parameter_buf);
+  free(ciphertext_buf);
+	cout << "readCihpertextFromPath: closed" << endl;
   cout << "ReadCiphertextFromPath\nDONE" << pathString << endl;
-  return readCipher;
+	return cipher;
 }
 
 

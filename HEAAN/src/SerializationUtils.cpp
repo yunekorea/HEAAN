@@ -15,7 +15,7 @@ namespace heaan {
 
 void SerializationUtils::writeCiphertext(Ciphertext& cipher, string path) {
 	fstream fout;
-	fout.open(path, ios::binary|ios::out);
+	fout.open(path.c_str(), ios::binary|ios::out);
 	long n = cipher.n;
 	long logp = cipher.logp;
 	long logq = cipher.logq;
@@ -43,7 +43,7 @@ Ciphertext* SerializationUtils::readCiphertext(string path) {
 	long n, logp, logq;
 	fstream fin;
 	cout << "readCihpertext: BEGIN" << endl;
-	fin.open(path, ios::binary|ios::in);
+	fin.open(path.c_str(), ios::binary|ios::in);
 	cout << "readCihpertext: open" << endl;
 	fin.read(reinterpret_cast<char*>(&n), sizeof(long));
 	fin.read(reinterpret_cast<char*>(&logp), sizeof(long));
@@ -72,7 +72,7 @@ Ciphertext* SerializationUtils::readCiphertext(string path) {
 
 void SerializationUtils::writeKey(Key* key, string path) {
 	fstream fout;
-	fout.open(path, ios::binary|ios::out);
+	fout.open(path.c_str(), ios::binary|ios::out);
 	fout.write(reinterpret_cast<char*>(key->rax), Nnprimes*sizeof(uint64_t));
 	fout.write(reinterpret_cast<char*>(key->rbx), Nnprimes*sizeof(uint64_t));
 	fout.close();
@@ -81,7 +81,7 @@ void SerializationUtils::writeKey(Key* key, string path) {
 Key* SerializationUtils::readKey(string path) {
 	Key *key = new Key;
 	fstream fin;
-	fin.open(path, ios::binary|ios::in);
+	fin.open(path.c_str(), ios::binary|ios::in);
 	fin.read(reinterpret_cast<char*>(key->rax), Nnprimes*sizeof(uint64_t));
 	fin.read(reinterpret_cast<char*>(key->rbx), Nnprimes*sizeof(uint64_t));
 	fin.close();
@@ -90,7 +90,7 @@ Key* SerializationUtils::readKey(string path) {
 
 void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
 	fstream fout;
-	fout.open(path, ios::binary|ios::out);
+	fout.open(path.c_str(), ios::binary|ios::out);
 	long logq = logQQ;
 
 	long np = ceil(((double)logq + 1)/8);
@@ -107,7 +107,7 @@ void SerializationUtils::writeSecretKey(SecretKey& secretKey, string path) {
 SecretKey* SerializationUtils::readSecretKey(Ring& ring, string path) {
 	long n, logp, logq;
 	fstream fin;
-	fin.open(path, ios::binary|ios::in);
+	fin.open(path.c_str(), ios::binary|ios::in);
   
 	long np = ceil(((double)logq + 1)/8);
 	unsigned char* bytes = new unsigned char[np];

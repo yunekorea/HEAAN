@@ -78,6 +78,21 @@ void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr) {
   scheme->addRightRotKeys(*secretKey);
 }
 
+long getCiptextN(void* cipher_ptr) {
+  Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
+  return cipher->n;
+}
+
+long getCiptextLogp(void* cipher_ptr) {
+  Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
+  return cipher->logp;
+}
+
+long getCiptextLogq(void* cipher_ptr) {
+  Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
+  return cipher->logq;
+}
+
 int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void* cipher2_ptr) {
   Scheme* scheme = static_cast<Scheme*>(scheme_ptr);
   Ciphertext* cipherAdd = static_cast<Ciphertext*>(cipherAdd_ptr); 

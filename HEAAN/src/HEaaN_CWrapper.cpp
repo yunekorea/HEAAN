@@ -78,17 +78,17 @@ void addRightRotKeys(void* scheme_ptr, void *secretKey_ptr) {
   scheme->addRightRotKeys(*secretKey);
 }
 
-long getCiptextN(void* cipher_ptr) {
+long getCiphertextN(void* cipher_ptr) {
   Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
   return cipher->n;
 }
 
-long getCiptextLogp(void* cipher_ptr) {
+long getCiphertextLogp(void* cipher_ptr) {
   Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
   return cipher->logp;
 }
 
-long getCiptextLogq(void* cipher_ptr) {
+long getCiphertextLogq(void* cipher_ptr) {
   Ciphertext* cipher = static_cast<Ciphertext*>(cipher_ptr);
   return cipher->logq;
 }

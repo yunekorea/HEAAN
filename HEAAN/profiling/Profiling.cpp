@@ -81,9 +81,11 @@ int main(int argc, char **argv) {
   Ciphertext cipherAdd[iter];
   //complex<double>* dvecadd[iter];
   for(int i = 0; i < iter; i++) { 
-    cout << "Progress : " << i << "/" << iter-1 << "\r"; 
+    //cout << "Progress : " << i << "/" << iter-1 << "\r"; 
     cipher2[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName0 + std::to_string(i) + ".cip");
     cipher3[i] = SerializationUtils::readCiphertext(WorkingDir + "/1GB_ciphertexts/" + SFileName1 + std::to_string(i) + ".cip");
+    
+    cout << "Progress : " << i << "/" << iter-1 << " n: " << cipher2[i]->n << " logp: " << cipher2[i]->logp << " logq: " << cipher2[i]->logq << "\r"; 
 
     scheme.add(cipherAdd[i], *cipher2[i], *cipher3[i]);
     SerializationUtils::writeCiphertext(cipherAdd[i], WorkingDir + "/1GB_ciphertexts/" + SFileNameAdd + std::to_string(i) + ".cip");

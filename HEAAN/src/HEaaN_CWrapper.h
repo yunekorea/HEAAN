@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdint.h>
 
 #ifndef HEAAN_CWRAPPER_H
 #define HEAAN_CWRAPPER_H
@@ -43,7 +44,7 @@ HEAAN_C_API long getCiphertextLogq(void* cipher_ptr);
 HEAAN_C_API int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* cipher1_ptr, void* cipher2_ptr);
 HEAAN_C_API void* readCiphertextFromPath(char* path);
 HEAAN_C_API int writeCiphertextToPath(void* cipher_ptr, char* path);
-HEAAN_C_API void* readCiphertextFromMem(void* buffer, size_t len);
+HEAAN_C_API void* readCiphertextFromMem(void* buffer, size_t len, uint64_t offset);
 
 
 #endif // HEAAN_CWRAPPER_H

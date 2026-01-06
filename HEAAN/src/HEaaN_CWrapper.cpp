@@ -207,30 +207,42 @@ void* readCiphertextFromMem(void* buffer, size_t len, uint64_t offset) {
         dataPtr += np;
     }
   
-  /*
-  std::string dataBuffer(static_cast<char*>(buffer), len);
-  std::stringstream dataStream(dataBuffer);
-
-  dataStream.read(reinterpret_cast<char*>(&n), sizeof(long));
-  dataStream.read(reinterpret_cast<char*>(&logp), sizeof(long));
-  dataStream.read(reinterpret_cast<char*>(&logq), sizeof(long));
-
-  long np = ceil(((double)logq + 1)/8);
-  unsigned char* bytes = new unsigned char[np];
-  Ciphertext* cipher = new Ciphertext(logp, logq, n);
-  for(long i = 0; i < N; ++i) {
-    dataStream.read(reinterpret_cast<char*>(bytes), np);
-    ZZFromBytes(cipher->ax[i], bytes, np);
-  }
-  for(long i = 0; i < N; ++i) {
-    dataStream.read(reinterpret_cast<char*>(bytes), np);
-    ZZFromBytes(cipher->bx[i], bytes, np);
-  }
-  */
-
   delete[] bytes;
 
   return cipher;
+}
+
+int writeCiphertextToMem(void* cipher_ptr, void* buffer, uint64_t offset) {
+  
+  Ciphertext* cipher = (Ciphertext*)cipher_ptr;
+  long n = cipher->n;
+  long logp = cipher->logp;
+  long logq = cipher->logq; 
+  
+  uint8_t* dataPtr = static_cast<uint8_t*>(buffer) + offset; 
+  
+  memcpy(dataPtr, &(cipher->n), sizeof(long));    dataPtr += sizeof(long);
+  memcpy(dataPtr, &(cipher->logp), sizeof(long)); dataPtr += sizeof(long);
+  memcpy(dataPtr, &(cipher->logq), sizeof(long)); dataPtr += sizeof(long); 
+  
+  long np = ceil(((double)(cipher->logq) + 1) / 8);
+  unsigned char* bytes = new unsigned char[np];
+ 
+  for (long i = 0; i < N; ++i) {
+        BytesFromZZ(bytes, cipher->ax[i], np);
+        memcpy(dataPtr, bytes, np);
+        dataPtr += np;
+    }
+
+    for (long i = 0; i < N; ++i) {
+        BytesFromZZ(bytes, cipher->bx[i], np);
+        memcpy(dataPtr, bytes, np);
+        dataPtr += np;
+    }
+  
+  delete[] bytes;
+
+  return 0;
 }
 
 }

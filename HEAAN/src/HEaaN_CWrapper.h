@@ -45,6 +45,7 @@ HEAAN_C_API int ciphertextAdd(void* scheme_ptr, void* cipherAdd_ptr, void* ciphe
 HEAAN_C_API void* readCiphertextFromPath(char* path);
 HEAAN_C_API int writeCiphertextToPath(void* cipher_ptr, char* path);
 HEAAN_C_API void* readCiphertextFromMem(void* buffer, size_t len, uint64_t offset);
+HEAAN_C_API int writeCiphertextToMem(void* cipher_ptr, void *buffer, uint64_t offset);
 
 
 #endif // HEAAN_CWRAPPER_H

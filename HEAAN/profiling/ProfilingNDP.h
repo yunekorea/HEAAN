@@ -11,7 +11,10 @@
 extern "C" {
     #include <libnvme.h>
     #include <unistd.h>
+	#include <fcntl.h>
 }
+#define DEVICE_BLOCK_SIZE 4096
+#define MAX_EXTENTS 1024 // Number of maximum extents
 
 #define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
 
@@ -26,6 +29,7 @@ typedef struct {
 typedef struct {
     char *filename;
     int extent_count;
+	uint64_t start_offset;
     uint64_t total_length;
     extent_info_t *extents;
 } file_layout_t;
